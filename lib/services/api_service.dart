@@ -20,11 +20,11 @@ class ApiService {
         final List result = jsonDecode(apiResponse.body)['results'];
         return result.map((json) => MovieModel.fromJson(json)).toList();
       } else {
-        return []; // 👈 handle non-200
+        return []; 
       }
     } catch (e) {
       print(e.toString());
-      return []; // 👈 always return list
+      return []; 
     }
   }
 }
