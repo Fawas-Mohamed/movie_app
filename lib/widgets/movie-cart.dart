@@ -10,27 +10,28 @@ class MovieCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return  GestureDetector( 
-      onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyWidget(movie:movie),),),
-      child:  Container(
-                      width: 150,
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Image.network(
-                            '${AppConstants.baseImageUrl}/${movie.posterPath}',
-                            height: 200,
-                            
-                          ),
-                          SizedBox(height: size.height*0.1),
-                          Text(
-                            movie.title,
-                            style: TextStyle(color: Colors.white),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
+    return GestureDetector(
+      onTap: () => Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => MyWidget(movie: movie))),
+      child: Container(
+        width: 150,
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Image.network(
+              '${AppConstants.baseImageUrl}/${movie.posterPath}',
+              height: 200,
+            ),
+            SizedBox(height: size.height * 0.06),
+            Text(
+              movie.title,
+              style: TextStyle(color: Colors.white),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
