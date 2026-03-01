@@ -36,8 +36,6 @@ Widget build(BuildContext context) {
             ),
           ),
         ),
-
-        /// 🔹 Main Content
         SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -50,35 +48,54 @@ Widget build(BuildContext context) {
                   child: Text(
                     "PopcornPals",
                     style: TextStyle(
-                      color: Color.fromARGB(255, 14, 148, 7),
+                      color: Color.fromARGB(255, 242, 255, 57),
                       fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    "Discover Your Movies",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 242, 255, 57),
+                      fontSize: 12,
                     ),
                   ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: 'search..',
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(Icons.search, color: Colors.white),
-                    ],
-                  ),
-                ),
+  padding: const EdgeInsets.all(16),
+  child: Row(
+    children: [
+      Expanded(
+        child: Container(
+  decoration: BoxDecoration(
+    color: Colors.white.withOpacity(0.1),
+    borderRadius: BorderRadius.circular(25),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.2),
+        blurRadius: 10,
+        offset: const Offset(0,4)
+      )
+    ],
+    border: Border.all(color: Colors.white.withOpacity(0.2)),
+  ),
+  child: TextField(
+    style: const TextStyle(color: Colors.white),
+    decoration: const InputDecoration(
+      hintText: "Search movies...",
+      hintStyle: TextStyle(color: Colors.white70),
+      prefixIcon: Icon(Icons.search, color: Colors.white),
+      border: InputBorder.none,
+    ),
+  ),
+)
+      ),
+    ],
+  ),
+),
 
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -121,6 +138,19 @@ Widget build(BuildContext context) {
                 ),
 
                 MovieList(type: 'upcoming'),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    'Now Playing',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
+                ),
+
+                MovieList(type: 'now_playing'),
               ],
             ),
           ),

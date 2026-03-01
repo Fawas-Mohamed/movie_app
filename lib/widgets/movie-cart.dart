@@ -22,6 +22,7 @@ class MovieCart extends StatelessWidget {
             Image.network(
               '${AppConstants.baseImageUrl}/${movie.posterPath}',
               height: 200,
+            
             ),
             SizedBox(height: size.height * 0.06),
             Text(
