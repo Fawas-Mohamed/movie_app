@@ -22,7 +22,7 @@ class MovieCart extends StatelessWidget {
                             height: 200,
                             
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: size.height*0.1),
                           Text(
                             movie.title,
                             style: TextStyle(color: Colors.white),
