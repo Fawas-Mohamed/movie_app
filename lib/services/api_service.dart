@@ -22,4 +22,25 @@ class ApiService {
       return [];
     }
   }
+
+  static Future<List<MovieModel>> searchMovies(String query) async {
+    if (query.isEmpty) return [];
+    try {
+      final url = Uri.https("api.themoviedb.org", "/3/search/movie", {
+        "api_key": AppConstants.apiKey,
+        "query": query,
+      });
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List result = jsonDecode(response.body)['results'];
+        return result.map((json) => MovieModel.fromJson(json)).toList();
+      } else {
+        print("TMDB API Error: ${response.statusCode}");
+        return [];
+      }
+    } catch (e) {
+      print("Error: $e");
+      return [];
+    }
+  }
 }
