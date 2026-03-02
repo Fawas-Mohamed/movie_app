@@ -21,9 +21,30 @@ class _HomePageState extends State<HomePage> {
   bool isSearching = false;
   bool isLoading = false;
 
+
+Future<void> testTrailer() async {
+  final trailers = await ApiService.fetchTrailer("1290821");
+  print(trailers.length);
+  print(trailers);
+
+for (var video in trailers) {
+  print(video.name);
+  print(video.key);
+  print(video.site);
+  print("--------------");
+}
+final youtubeTrailers = trailers.where((video) =>
+    video.site == "YouTube" && video.type == "Trailer" );
+
+print(youtubeTrailers.length);
+for(var video in youtubeTrailers){
+  print(video.name);
+}
+}
   @override
   void initState() {
     super.initState();
+    testTrailer();
 
     _searchController.addListener(() {
       setState(() {});
@@ -257,10 +278,12 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 MovieList(type: 'now_playing'),
+                                
                               ],
                             ),
                           ),
                   ),
+               
                 ],
               ),
             ),

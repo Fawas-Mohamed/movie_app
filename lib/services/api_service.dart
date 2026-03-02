@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:movieapp/core/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:movieapp/models/moviemodel.dart';
+import 'package:movieapp/models/videomodel.dart';
 
 class ApiService {
   static Future<List<MovieModel>> fetchMovies({String type = 'popular'}) async {
@@ -43,4 +44,34 @@ class ApiService {
       return [];
     }
   }
+
+  static Future<List<VideoModel>> fetchTrailer(String movieId) async {
+  if (movieId.isEmpty) return [];
+
+  try {
+    final url = Uri.https(
+      "api.themoviedb.org",
+      "/3/movie/$movieId/videos",
+      {
+        "api_key": AppConstants.apiKey,
+      },
+    );
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+      final List results = decoded['results'];
+
+      return results
+          .map<VideoModel>((json) => VideoModel.fromJson(json))
+          .toList();   // 🔥 VERY IMPORTANT
+    } else {
+      return [];
+    }
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
 }
