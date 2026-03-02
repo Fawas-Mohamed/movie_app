@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _searchController.addListener(() {
-      setState(() {}); // rebuild for clear button visibility
+      setState(() {});
     });
   }
 
@@ -111,7 +111,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  /// 🔎 Search Bar
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Container(
@@ -155,7 +154,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  /// 🎬 Animated Switcher
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     transitionBuilder: (child, animation) {
@@ -215,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ),
@@ -228,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ),
@@ -241,7 +239,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ),
@@ -254,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ),

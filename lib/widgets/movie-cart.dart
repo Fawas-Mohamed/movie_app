@@ -5,32 +5,69 @@ import 'package:movieapp/pages/movie_details.dart';
 
 class MovieCart extends StatelessWidget {
   final MovieModel movie;
-  const MovieCart({required this.movie, super.key});
+
+  const MovieCart({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => MyWidget(movie: movie))),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyWidget(movie: movie),
+          ),
+        );
+      },
       child: Container(
-        width: 150,
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Image.network(
-              '${AppConstants.baseImageUrl}/${movie.posterPath}',
-              height: 200,
-            
-            ),
-            SizedBox(height: size.height * 0.06),
-            Text(
-              movie.title,
-              style: TextStyle(color: Colors.white),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+        width: 160,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: Stack(
+            alignment: Alignment.bottomLeft,
+            children: [
+              Hero(
+                tag: movie.id,
+                child: Image.network(
+                  '${AppConstants.baseImageUrl}/${movie.posterPath}',
+                  height: 300,
+                  width: 180,
+                  fit: BoxFit.cover,
+                ),
+              ),
+
+              Container(
+                height: 230,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.center,
+                    colors: [
+                      Colors.black87,
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  movie.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                
+              ),
+              Icon(Icons.heart_broken)
+            ],
+          ),
         ),
       ),
     );
