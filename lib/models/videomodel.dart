@@ -23,9 +23,6 @@ class VideoModel {
         required this.id,
     });
 
-
-
-
 factory VideoModel.fromJson(Map<String, dynamic> json) {
   return VideoModel(
     iso6391: json['iso_639_1'] ?? '',

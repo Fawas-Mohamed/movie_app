@@ -13,7 +13,6 @@ class MovieList extends StatefulWidget {
 class _MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SizedBox(
       height: 300,
       child: FutureBuilder(

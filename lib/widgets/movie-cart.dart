@@ -14,9 +14,7 @@ class MovieCart extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => MyWidget(movie: movie),
-          ),
+          MaterialPageRoute(builder: (context) => MyWidget(movie: movie)),
         );
       },
       child: Container(
@@ -27,15 +25,17 @@ class MovieCart extends StatelessWidget {
           child: Stack(
             alignment: Alignment.bottomLeft,
             children: [
+              
               Hero(
                 tag: movie.id,
                 child: Image.network(
-                  '${AppConstants.baseImageUrl}/${movie.posterPath}',
+                  '${AppConstants.baseImageUrl}${movie.posterPath}',
                   height: 300,
                   width: 180,
                   fit: BoxFit.cover,
-                ),
+                )
               ),
+              
 
               Container(
                 height: 230,
@@ -43,14 +43,13 @@ class MovieCart extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.center,
-                    colors: [
-                      Colors.black87,
-                      Colors.transparent,
-                    ],
+                    colors: [Colors.black87, Colors.transparent],
                   ),
                 ),
+                
               ),
-
+        
+              
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
@@ -58,15 +57,20 @@ class MovieCart extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 18,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 
               ),
-              Icon(Icons.heart_broken)
+              Column(
+                children: [
+                  Icon(Icons.local_movies ,color: const Color.fromARGB(255, 164, 26, 26),),
+                ],
+              ),
             ],
+            
           ),
         ),
       ),

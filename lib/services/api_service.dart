@@ -45,33 +45,28 @@ class ApiService {
     }
   }
 
-  static Future<List<VideoModel>> fetchTrailer(String movieId) async {
-  if (movieId.isEmpty) return [];
-
-  try {
-    final url = Uri.https(
-      "api.themoviedb.org",
-      "/3/movie/$movieId/videos",
-      {
+  static Future<String?> fetchTrailer(int movieId) async {
+    try {
+      final url = Uri.https("api.themoviedb.org", "/3/movie/$movieId/videos", {
         "api_key": AppConstants.apiKey,
-      },
-    );
+      });
 
-    final response = await http.get(url);
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final decoded = jsonDecode(response.body);
-      final List results = decoded['results'];
+      if (response.statusCode == 200) {
+        final decoded = jsonDecode(response.body);
+        final List results = decoded['results'];
 
-      return results
-          .map<VideoModel>((json) => VideoModel.fromJson(json))
-          .toList();   // 🔥 VERY IMPORTANT
-    } else {
-      return [];
+        for (var video in results) {
+          if (video['site'] == "YouTube" && video['type'] == "Trailer") {
+            return video['key']; 
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
     }
-  } catch (e) {
-    print(e);
-    return [];
+
+    return null;
   }
-}
 }
