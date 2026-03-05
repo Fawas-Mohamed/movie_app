@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:808052301444:android:f18318319e9cbcf2152cd1",
+        "android_client_info": {
+          "package_name": "com.example.movieapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOTf7Zs0CcXbtceGi4-nLhI21pk72TLwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:808052301444:android:83b853ae5dfa1cd3152cd1",
         "android_client_info": {
           "package_name": "popcornpal.com"
