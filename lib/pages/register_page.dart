@@ -145,24 +145,26 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 10),
                   Center(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SigninPage()),
-            );
-          },
-          child: const Text(
-            'Sign In',
-            style: TextStyle(
-                color: Colors.blue, decoration: TextDecoration.underline),
-          ),
-        ),
-      ),
-    
-
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SigninPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Sign In',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
