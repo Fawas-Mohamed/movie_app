@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/pages/home_page.dart';
+import 'package:movieapp/pages/signin_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,7 +11,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -18,16 +18,15 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isLoading = false;
 
   Future signUpUser() async {
-
-    if (passwordController.text.trim() != confirmPasswordController.text.trim()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Passwords do not match")),
-      );
+    if (passwordController.text.trim() !=
+        confirmPasswordController.text.trim()) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
       return;
     }
 
     try {
-
       setState(() {
         isLoading = true;
       });
@@ -41,13 +40,10 @@ class _RegisterPageState extends State<RegisterPage> {
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
-
     } on FirebaseAuthException catch (e) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message ?? "Signup failed")),
-      );
-
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.message ?? "Signup failed")));
     }
 
     setState(() {
@@ -55,11 +51,11 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  Widget buildTextField(
-      {required TextEditingController controller,
-      required String hint,
-      bool obscure = false}) {
-
+  Widget buildTextField({
+    required TextEditingController controller,
+    required String hint,
+    bool obscure = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextField(
@@ -82,7 +78,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.black,
 
@@ -94,12 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-
-                  const Icon(
-                    Icons.movie,
-                    color: Colors.amber,
-                    size: 80,
-                  ),
+                  const Icon(Icons.movie, color: Colors.amber, size: 80),
 
                   const SizedBox(height: 20),
 
@@ -114,10 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 30),
 
-                  buildTextField(
-                    controller: emailController,
-                    hint: "Email",
-                  ),
+                  buildTextField(controller: emailController, hint: "Email"),
 
                   buildTextField(
                     controller: passwordController,
@@ -148,9 +135,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: isLoading ? null : signUpUser,
 
                       child: isLoading
-                          ? const CircularProgressIndicator(
-                              color: Colors.black,
-                            )
+                          ? const CircularProgressIndicator(color: Colors.black)
                           : const Text(
                               "Register",
                               style: TextStyle(
@@ -160,6 +145,23 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                     ),
                   ),
+                  SizedBox(height: 10,),
+                  Center(
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SigninPage()),
+            );
+          },
+          child: const Text(
+            'Sign In',
+            style: TextStyle(
+                color: Colors.blue, decoration: TextDecoration.underline),
+          ),
+        ),
+      ),
+    
 
                 ],
               ),
