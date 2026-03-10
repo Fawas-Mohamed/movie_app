@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart';
 import 'package:movieapp/models/moviemodel.dart';
+import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 import 'package:movieapp/widgets/movie-list.dart';
@@ -179,7 +180,9 @@ class _HomePageState extends State<HomePage> {
                 "Favorites",
                 style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoritePage()));
+              },
             ),
 
             ListTile(
