@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/pages/movie_details.dart';
+import 'package:movieapp/services/favorite_service.dart';
 
 class MovieCart extends StatelessWidget {
   final MovieModel movie;
@@ -64,11 +65,9 @@ class MovieCart extends StatelessWidget {
                 ),
                 
               ),
-              Column(
-                children: [
-                  Icon(Icons.local_movies ,color: const Color.fromARGB(255, 164, 26, 26),),
-                ],
-              ),
+              Positioned(top: 10,
+              right: 10,
+              child: IconButton(icon:Icon(Icons.favorite_border,color: Colors.white,) ,onPressed: (){FavoriteService.addFavorite(movie);}),)
             ],
             
           ),

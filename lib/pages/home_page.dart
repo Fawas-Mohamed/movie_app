@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         height: 160,
         autoPlay: true,
         enlargeCenterPage: true,
-        viewportFraction: 0.9,   
+        viewportFraction: 0.9,
       ),
       items: bannerMovies.map((movie) {
         return Stack(
@@ -112,10 +112,7 @@ class _HomePageState extends State<HomePage> {
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.8),
-                    Colors.transparent
-                  ],
+                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
                 ),
               ),
             ),
@@ -131,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            )
+            ),
           ],
         );
       }).toList(),
@@ -141,62 +138,72 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       drawer: Drawer(
         width: 220,
-  backgroundColor: Colors.black.withOpacity(0.6),
-  child: ListView(
-    children: [
+        backgroundColor: Colors.black.withOpacity(0.6),
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              currentAccountPictureSize: Size(50, 50),
+              decoration: const BoxDecoration(color: Colors.black),
+              accountName: const Text(
+                "WelCome",
+                style: TextStyle(fontSize: 18),
+              ),
+              accountEmail: Text(
+                user?.email?.substring(0, 5).toLowerCase() ?? "U",
+              ),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                child: Text(
+                  user?.email?.substring(0, 1).toUpperCase() ?? "U",
+                  style: const TextStyle(color: Colors.black),
+                ),
+              ),
+            ),
 
-      UserAccountsDrawerHeader(
-        currentAccountPictureSize: Size(50, 50),
-        decoration: const BoxDecoration(color: Colors.black),
-        accountName: const Text("WelCome", style: TextStyle(fontSize: 18)),
-        accountEmail: Text(
-                            user?.email?.substring(0, 5).toLowerCase() ?? "U",),
-        currentAccountPicture: CircleAvatar(
-                          backgroundColor: const Color.fromARGB(255, 242, 255, 57),
-                          child: Text(
-                            user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                        ),
-      ),
+            ListTile(
+              leading: const Icon(Icons.home, color: Colors.white),
+              title: const Text(
+                "Home",
+                style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
 
-      ListTile(
-        leading: const Icon(Icons.home, color: Colors.white),
-        title: const Text("Home", style: TextStyle(color: Color.fromARGB(255, 242, 255, 57))),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
+            ListTile(
+              leading: const Icon(Icons.favorite, color: Colors.white),
+              title: const Text(
+                "Favorites",
+                style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
+              ),
+              onTap: () {},
+            ),
 
-      ListTile(
-        leading: const Icon(Icons.favorite, color: Colors.white),
-        title: const Text("Favorites", style: TextStyle(color: Color.fromARGB(255, 242, 255, 57))),
-        onTap: () {},
-      ),
+            ListTile(
+              leading: const Icon(Icons.settings, color: Colors.white),
+              title: const Text(
+                "Settings",
+                style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
+              ),
+              onTap: () {},
+            ),
 
-      ListTile(
-        leading: const Icon(Icons.settings, color: Colors.white),
-        title: const Text("Settings", style: TextStyle(color: Color.fromARGB(255, 242, 255, 57))),
-        onTap: () {},
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text("Logout", style: TextStyle(color: Colors.red)),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+              },
+            ),
+          ],
+        ),
       ),
-
-      ListTile(
-        leading: const Icon(Icons.logout, color: Colors.red),
-        title: const Text("Logout", style: TextStyle(color: Colors.red)),
-        onTap: () async {
-          await FirebaseAuth.instance.signOut();
-        },
-      ),
-    ],
-  ),
-),
 
       body: Stack(
         children: [
-
           Positioned.fill(
             child: Image.network(
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
@@ -223,10 +230,12 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         Builder(
                           builder: (context) => IconButton(
-                            icon: const Icon(Icons.read_more, color: Color.fromARGB(255, 242, 255, 57)),
+                            icon: const Icon(
+                              Icons.read_more,
+                              color: Color.fromARGB(255, 242, 255, 57),
+                            ),
                             onPressed: () {
                               Scaffold.of(context).openDrawer();
                             },
@@ -252,7 +261,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    
                   ),
                   const Center(
                     child: Text(
@@ -265,8 +273,6 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   const SizedBox(height: 20),
-
-                  
 
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -310,10 +316,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                   if (!isSearching)
-                   bannerSlider(),
-      
-                   AnimatedSwitcher(
+                  if (!isSearching) bannerSlider(),
+
+                  AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     transitionBuilder: (child, animation) {
                       return FadeTransition(
@@ -347,67 +352,78 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 if (!isLoading)
                                   Column(
-  children: List.generate(
-    searchResults.length,
-    (index) => Row(
-      children: [
-        MovieCart(
-          movie: searchResults[index],
-        ),
-      ],
-    ),
-  ),
-),
+                                    children: List.generate(
+                                      searchResults.length,
+                                      (index) => Row(
+                                        children: [
+                                          MovieCart(
+                                            movie: searchResults[index],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                               ],
-                            ),):const SizedBox(),),
-                         
-      
+                            ),
+                          )
+                        : const SizedBox(),
+                  ),
 
-
-                  
-
-               
-                  
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Padding(
-                          padding: EdgeInsets.all(15),
-                          child: Text(
-                            'Popular Movies',
-                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          'Popular Movies',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        MovieList(type: 'popular'),
+                      ),
+                      MovieList(type: 'popular'),
 
-                        Padding(
-                          padding: EdgeInsets.all(15),
-                          child: Text(
-                            'Top Rated',
-                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
+                      Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          'Top Rated',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        MovieList(type: 'top_rated'),
+                      ),
+                      MovieList(type: 'top_rated'),
 
-                        Padding(
-                          padding: EdgeInsets.all(15),
-                          child: Text(
-                            'Upcoming',
-                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
+                      Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          'Upcoming',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        MovieList(type: 'upcoming'),
-                        Padding(
-                          padding: EdgeInsets.all(15),
-                          child: Text(
-                            'Nowplaying',
-                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
+                      ),
+                      MovieList(type: 'upcoming'),
+                      Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          'Nowplaying',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        MovieList(type: 'now_playing'),
-                      ],
-                    ),
+                      ),
+                      MovieList(type: 'now_playing'),
+                    ],
+                  ),
                 ],
               ),
             ),
