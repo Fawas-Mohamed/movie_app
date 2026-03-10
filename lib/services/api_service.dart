@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:movieapp/core/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:movieapp/models/moviemodel.dart';
-import 'package:movieapp/models/videomodel.dart';
 
 class ApiService {
   static Future<List<MovieModel>> fetchMovies({String type = 'popular'}) async {

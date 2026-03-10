@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/pages/home_page.dart';
+import 'package:movieapp/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:movieapp/pages/register_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,8 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'popcornpals',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: const RegisterPage(),
+      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+      home: const AuthPage(),
     );
   }
 }

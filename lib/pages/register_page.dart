@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const Icon(Icons.movie, color: Colors.amber, size: 80),
+                  const Icon(Icons.movie, color: Color.fromARGB(255, 242, 255, 57), size: 80),
 
                   const SizedBox(height: 20),
 
@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.amber,
+                        backgroundColor: Color.fromARGB(255, 242, 255, 57),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

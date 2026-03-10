@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/register_page.dart';
 
@@ -21,12 +21,10 @@ class _SigninPageState extends State<SigninPage> {
       setState(() {
         isLoading = true;
       });
-
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
@@ -34,12 +32,12 @@ class _SigninPageState extends State<SigninPage> {
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(e.message ?? "Login failed")));
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
-
-    setState(() {
-      isLoading = false;
-    });
   }
 
   Widget buildTextField({
@@ -52,16 +50,9 @@ class _SigninPageState extends State<SigninPage> {
       child: TextField(
         controller: controller,
         obscureText: obscure,
-        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: hint,
-          hintStyle: const TextStyle(color: Colors.white60),
-          filled: true,
-          fillColor: Colors.grey[900],
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
     );
@@ -80,7 +71,7 @@ class _SigninPageState extends State<SigninPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const Icon(Icons.movie, color: Colors.amber, size: 80),
+                  const Icon(Icons.movie, color: Color.fromARGB(255, 242, 255, 57), size: 80),
 
                   const SizedBox(height: 20),
 
@@ -110,7 +101,7 @@ class _SigninPageState extends State<SigninPage> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.amber,
+                        backgroundColor: Color.fromARGB(255, 242, 255, 57),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
