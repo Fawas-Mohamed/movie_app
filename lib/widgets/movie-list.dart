@@ -16,14 +16,14 @@ class _MovieListState extends State<MovieList> {
     return SizedBox(
       height: 300,
       child: FutureBuilder(
-        future: ApiService.fetchMovies(type: widget.type),
+        future: ApiService.fetchMovies(widget.type), // ✅ FIXED
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text("Error"));
+            return const Center(child: Text("Error"));
           } else if (!snapshot.hasData) {
-            return Center(child: Text("No Movies"));
+            return const Center(child: Text("No Movies"));
           }
 
           return ListView.builder(

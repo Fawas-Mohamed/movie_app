@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
@@ -15,9 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
+  final user = FirebaseAuth.instance.currentUser;
+
   Timer? _debounce;
 
   List<MovieModel> searchResults = [];
+  List<MovieModel> bannerMovies = [];
+
   bool isSearching = false;
   bool isLoading = false;
 
@@ -25,8 +32,18 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    loadBannerMovies();
+
     _searchController.addListener(() {
       setState(() {});
+    });
+  }
+
+  Future loadBannerMovies() async {
+    final movies = await ApiService.fetchMovies("popular");
+
+    setState(() {
+      bannerMovies = movies.take(5).toList();
     });
   }
 
@@ -65,11 +82,121 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  Widget bannerSlider() {
+    if (bannerMovies.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 160,
+        autoPlay: true,
+        enlargeCenterPage: true,
+        viewportFraction: 0.9,   
+      ),
+      items: bannerMovies.map((movie) {
+        return Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.network(
+                "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.8),
+                    Colors.transparent
+                  ],
+                ),
+              ),
+            ),
+
+            Positioned(
+              bottom: 10,
+              left: 10,
+              child: Text(
+                movie.title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
+        );
+      }).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      drawer: Drawer(
+        width: 220,
+  backgroundColor: Colors.black.withOpacity(0.6),
+  child: ListView(
+    children: [
+
+      UserAccountsDrawerHeader(
+        currentAccountPictureSize: Size(50, 50),
+        decoration: const BoxDecoration(color: Colors.black),
+        accountName: const Text("WelCome", style: TextStyle(fontSize: 18)),
+        accountEmail: Text(
+                            user?.email?.substring(0, 5).toLowerCase() ?? "U",),
+        currentAccountPicture: CircleAvatar(
+                          backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                          child: Text(
+                            user?.email?.substring(0, 1).toUpperCase() ?? "U",
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        ),
+      ),
+
+      ListTile(
+        leading: const Icon(Icons.home, color: Colors.white),
+        title: const Text("Home", style: TextStyle(color: Color.fromARGB(255, 242, 255, 57))),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+
+      ListTile(
+        leading: const Icon(Icons.favorite, color: Colors.white),
+        title: const Text("Favorites", style: TextStyle(color: Color.fromARGB(255, 242, 255, 57))),
+        onTap: () {},
+      ),
+
+      ListTile(
+        leading: const Icon(Icons.settings, color: Colors.white),
+        title: const Text("Settings", style: TextStyle(color: Color.fromARGB(255, 242, 255, 57))),
+        onTap: () {},
+      ),
+
+      ListTile(
+        leading: const Icon(Icons.logout, color: Colors.red),
+        title: const Text("Logout", style: TextStyle(color: Colors.red)),
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+        },
+      ),
+    ],
+  ),
+),
+
       body: Stack(
         children: [
+
           Positioned.fill(
             child: Image.network(
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
@@ -89,17 +216,43 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
+                  SizedBox(height: 15),
 
-                  const Center(
-                    child: Text(
-                      "PopcornPals",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 242, 255, 57),
-                        fontSize: 30,
-                        fontWeight: FontWeight.w900,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+
+                        Builder(
+                          builder: (context) => IconButton(
+                            icon: const Icon(Icons.read_more, color: Color.fromARGB(255, 242, 255, 57)),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          ),
+                        ),
+
+                        const Text(
+                          "PopcornPals",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 242, 255, 57),
+                            fontSize: 28,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+
+                        CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Color.fromARGB(255, 242, 255, 57),
+                          child: Text(
+                            user?.email?.substring(0, 1).toUpperCase() ?? "U",
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
                     ),
+                    
                   ),
                   const Center(
                     child: Text(
@@ -110,6 +263,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+
+                  const SizedBox(height: 20),
+
+                  
 
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -153,8 +310,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-
-                  AnimatedSwitcher(
+                   if (!isSearching)
+                   bannerSlider(),
+      
+                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     transitionBuilder: (child, animation) {
                       return FadeTransition(
@@ -187,84 +346,68 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 if (!isLoading)
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: searchResults.length,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        children: [
-                                          MovieCart(
-                                            movie: searchResults[index],
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
+                                  Column(
+  children: List.generate(
+    searchResults.length,
+    (index) => Row(
+      children: [
+        MovieCart(
+          movie: searchResults[index],
+        ),
+      ],
+    ),
+  ),
+),
                               ],
-                            ),
-                          )
-                        : SizedBox(
-                            key: const ValueKey('categories'),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: Text(
-                                    'Popular Movies',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                MovieList(type: 'popular'),
+                            ),):const SizedBox(),),
+                         
+      
 
-                                Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: Text(
-                                    'Top Rated',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                MovieList(type: 'top_rated'),
 
-                                Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: Text(
-                                    'Upcoming',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                MovieList(type: 'upcoming'),
+                  
 
-                                Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: Text(
-                                    'Now Playing',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                MovieList(type: 'now_playing'),
-                              ],
-                            ),
+               
+                  
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            'Popular Movies',
+                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
                           ),
-                  ),
+                        ),
+                        MovieList(type: 'popular'),
+
+                        Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            'Top Rated',
+                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
+                          ),
+                        ),
+                        MovieList(type: 'top_rated'),
+
+                        Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            'Upcoming',
+                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
+                          ),
+                        ),
+                        MovieList(type: 'upcoming'),
+                        Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            'Nowplaying',
+                            style: TextStyle(color: Colors.white,fontSize:20,fontWeight:FontWeight.bold),
+                          ),
+                        ),
+                        MovieList(type: 'now_playing'),
+                      ],
+                    ),
                 ],
               ),
             ),
