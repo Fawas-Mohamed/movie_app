@@ -65,9 +65,33 @@ class MovieCart extends StatelessWidget {
                 ),
                 
               ),
-              Positioned(top: 10,
-              right: 10,
-              child: IconButton(icon:Icon(Icons.favorite_border,color: Colors.white,) ,onPressed: (){FavoriteService.addFavorite(movie);}),)
+              Positioned(
+  top: 8,
+  right: 8,
+  child: StreamBuilder<bool>(
+    stream: FavoriteService.isFavorite(movie.id.toString()),
+    builder: (context, snapshot) {
+
+      bool isFav = snapshot.data ?? false;
+
+      return IconButton(
+        icon: Icon(
+          isFav ? Icons.favorite : Icons.favorite_border,
+          color: isFav ? Colors.red : Colors.white,
+        ),
+        onPressed: () {
+
+          if (isFav) {
+            FavoriteService.removeFavorite(movie.id.toString());
+          } else {
+            FavoriteService.addFavorite(movie);
+          }
+
+        },
+      );
+    },
+  ),
+)
             ],
             
           ),
