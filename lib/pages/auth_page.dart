@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/pages/home_page.dart';
+import 'package:movieapp/pages/main_navigation.dart';
 import 'package:movieapp/pages/signin_page.dart';
 
 class AuthPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class AuthPage extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasData) {
-          return const HomePage();
+          return const MainNavigation();
         } else {
           return const SigninPage();
         }

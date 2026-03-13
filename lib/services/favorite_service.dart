@@ -5,11 +5,10 @@ import '../models/moviemodel.dart';
 class FavoriteService {
   static final user = FirebaseAuth.instance.currentUser;
 
-  static CollectionReference get favRef =>
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(user!.uid)
-          .collection('favorites');
+  static CollectionReference get favRef => FirebaseFirestore.instance
+      .collection('users')
+      .doc(user!.uid)
+      .collection('favorites');
 
   static Future<void> addFavorite(MovieModel movie) async {
     await favRef.doc(movie.id.toString()).set({

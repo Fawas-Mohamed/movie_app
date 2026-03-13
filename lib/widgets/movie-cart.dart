@@ -26,7 +26,6 @@ class MovieCart extends StatelessWidget {
           child: Stack(
             alignment: Alignment.bottomLeft,
             children: [
-              
               Hero(
                 tag: movie.id,
                 child: Image.network(
@@ -34,9 +33,8 @@ class MovieCart extends StatelessWidget {
                   height: 300,
                   width: 180,
                   fit: BoxFit.cover,
-                )
+                ),
               ),
-              
 
               Container(
                 height: 230,
@@ -47,10 +45,8 @@ class MovieCart extends StatelessWidget {
                     colors: [Colors.black87, Colors.transparent],
                   ),
                 ),
-                
               ),
-        
-              
+
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
@@ -63,37 +59,32 @@ class MovieCart extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                
               ),
               Positioned(
-  top: 8,
-  right: 8,
-  child: StreamBuilder<bool>(
-    stream: FavoriteService.isFavorite(movie.id.toString()),
-    builder: (context, snapshot) {
+                top: 8,
+                right: 8,
+                child: StreamBuilder<bool>(
+                  stream: FavoriteService.isFavorite(movie.id.toString()),
+                  builder: (context, snapshot) {
+                    bool isFav = snapshot.data ?? false;
 
-      bool isFav = snapshot.data ?? false;
-
-      return IconButton(
-        icon: Icon(
-          isFav ? Icons.favorite : Icons.favorite_border,
-          color: isFav ? Colors.red : Colors.white,
-        ),
-        onPressed: () {
-
-          if (isFav) {
-            FavoriteService.removeFavorite(movie.id.toString());
-          } else {
-            FavoriteService.addFavorite(movie);
-          }
-
-        },
-      );
-    },
-  ),
-)
+                    return IconButton(
+                      icon: Icon(
+                        isFav ? Icons.favorite : Icons.favorite_border,
+                        color: isFav ? Colors.red : Colors.white,
+                      ),
+                      onPressed: () {
+                        if (isFav) {
+                          FavoriteService.removeFavorite(movie.id.toString());
+                        } else {
+                          FavoriteService.addFavorite(movie);
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
-            
           ),
         ),
       ),
