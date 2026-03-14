@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-class BottomNavigation extends StatelessWidget {
+
+class AppBottomNav extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  const BottomNavigation({
+  const AppBottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
@@ -11,32 +12,30 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black.withOpacity(0.8),
-      child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        onTap: onTap,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+    return BottomNavigationBar(
+      backgroundColor: Colors.black,
+      currentIndex: currentIndex,
+      selectedItemColor: const Color.fromARGB(255, 242, 255, 57),
+      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
+
+      onTap: onTap,
+
+      items: const [
+
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "Home",
+        ),
+
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: "Favorites",
+        ),
+
+       
+
+      ],
     );
   }
 }

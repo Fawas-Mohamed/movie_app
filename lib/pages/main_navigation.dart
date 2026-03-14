@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/favorite_page.dart';
-
+import 'package:movieapp/widgets/bottom-navigation.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -14,35 +14,30 @@ class _MainNavigationState extends State<MainNavigation> {
 
   int currentIndex = 0;
 
-  final List<Widget> pages = const [
+  final pages = const [
     HomePage(),
     FavoritePage(),
     
   ];
 
+  void changePage(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentIndex],
 
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
+      body: IndexedStack(
+        index: currentIndex,
+        children: pages,
+      ),
+
+      bottomNavigationBar: AppBottomNav(
         currentIndex: currentIndex,
-        selectedItemColor: Color.fromARGB(255, 242, 255, 57),
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorites"),
-          
-        ],
+        onTap: changePage,
       ),
     );
   }
