@@ -11,14 +11,9 @@ class MainNavigation extends StatefulWidget {
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-
   int currentIndex = 0;
 
-  final pages = const [
-    HomePage(),
-    FavoritePage(),
-    
-  ];
+  final pages = const [HomePage(), FavoritePage()];
 
   void changePage(int index) {
     setState(() {
@@ -29,11 +24,7 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: IndexedStack(
-        index: currentIndex,
-        children: pages,
-      ),
+      body: IndexedStack(index: currentIndex, children: pages),
 
       bottomNavigationBar: AppBottomNav(
         currentIndex: currentIndex,

@@ -62,6 +62,13 @@ class FavoritePage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      const Text(
+                        " You Can Add Your Favorite Movies Here ❤️",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 242, 255, 57),
+                          fontSize: 16
+                        ),
+                      ),
 
                       CircleAvatar(
                         radius: 18,
