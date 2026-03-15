@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/pages/signin_page.dart';
 import 'package:movieapp/widgets/profile_header.dart';
 import 'package:movieapp/widgets/profile_menu_tile.dart';
 import 'package:movieapp/widgets/profile_stat_card.dart';
@@ -142,8 +143,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         onPressed: () async {
                           await FirebaseAuth.instance.signOut();
-
-                          Navigator.pushReplacementNamed(context, "/login");
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SigninPage()));
                         },
                         child: const Text(
                           "Logout",

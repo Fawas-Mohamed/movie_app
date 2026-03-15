@@ -32,9 +32,14 @@ class AppBottomNav extends StatelessWidget {
           icon: Icon(Icons.favorite),
           label: "Favorites",
         ),
-
-       
-
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bookmark),
+          label: "Wachlist",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: "Profile",
+        ),
       ],
     );
   }

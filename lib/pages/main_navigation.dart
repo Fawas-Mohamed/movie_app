@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/favorite_page.dart';
+import 'package:movieapp/pages/profile_page.dart';
+import 'package:movieapp/pages/watchlist-page.dart';
 import 'package:movieapp/widgets/bottom-navigation.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -13,7 +15,7 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int currentIndex = 0;
 
-  final pages = const [HomePage(), FavoritePage()];
+  final pages = const [HomePage(), FavoritePage(),Watchlistpage(), ProfilePage()];
 
   void changePage(int index) {
     setState(() {
