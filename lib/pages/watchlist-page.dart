@@ -10,6 +10,8 @@ class Watchlistpage extends StatefulWidget {
 class _WatchlistpageState extends State<Watchlistpage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      
+    );
   }
 }

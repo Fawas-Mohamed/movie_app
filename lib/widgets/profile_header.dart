@@ -29,8 +29,15 @@ class ProfileHeader extends StatelessWidget {
             ),
             child: Column(
               children: [
+                GestureDetector(
+                onTap:(){
+                  ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Edit Profile coming soon")),
+    );
+
+                },
                 /// Avatar
-                CircleAvatar(
+                child:CircleAvatar(
                   radius: 45,
                   backgroundColor: const Color.fromARGB(255, 242, 255, 57),
                   child: Text(
@@ -41,6 +48,7 @@ class ProfileHeader extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                ),
                 ),
 
                 const SizedBox(height: 15),

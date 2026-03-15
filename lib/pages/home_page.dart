@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:http/http.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/pages/profile_page.dart';
@@ -246,6 +245,9 @@ class _HomePageState extends State<HomePage> {
             child: Image.network(
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+    return Container(color: Colors.black);
+              },
             ),
           ),
 

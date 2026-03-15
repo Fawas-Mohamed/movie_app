@@ -20,6 +20,9 @@ class FavoritePage extends StatelessWidget {
             child: Image.network(
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+    return Container(color: Colors.black);
+              },
             ),
           ),
 
