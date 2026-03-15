@@ -141,71 +141,105 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        width: 220,
-        backgroundColor: Colors.black.withOpacity(0.6),
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              currentAccountPictureSize: Size(50, 50),
-              decoration: const BoxDecoration(color: Colors.black),
-              accountName: const Text(
-                "WelCome",
-                style: TextStyle(fontSize: 18),
-              ),
-              accountEmail: Text(
-                user?.email?.substring(0, 5).toLowerCase() ?? "U",
-              ),
-              currentAccountPicture: CircleAvatar(
-                child:ElevatedButton(onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));}, child:Text(user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                  style: const TextStyle(color: Colors.black),) ),
-                backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+  width: 220,
+  backgroundColor: Colors.black,
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: [
 
+      UserAccountsDrawerHeader(
+        currentAccountPictureSize: Size(50, 50),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+        ),
+        accountName: const Text(
+          "Welcome",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        accountEmail: Text(
+          user?.email ?? "user@email.com",
+          style: const TextStyle(color: Colors.grey),
+        ),
+
+        currentAccountPicture: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfilePage(),
+              ),
+            );
+          },
+          child: CircleAvatar(
+            backgroundColor: Color.fromARGB(255, 242, 255, 57),
+            child: Text(
+              user?.email?.substring(0, 1).toUpperCase() ?? "U",
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
-
-            ListTile(
-              leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text(
-                "Home",
-                style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-
-            ListTile(
-              leading: const Icon(Icons.favorite, color: Colors.white),
-              title: const Text(
-                "Favorites",
-                style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
-              ),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoritePage()));
-              },
-            ),
-
-            ListTile(
-              leading: const Icon(Icons.settings, color: Colors.white),
-              title: const Text(
-                "Settings",
-                style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
-              ),
-              onTap: () {},
-            ),
-
-            ListTile(
-              leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text("Logout", style: TextStyle(color: Colors.red)),
-              onTap: () async {
-                await FirebaseAuth.instance.signOut();
-              },
-            ),
-          ],
+          ),
         ),
       ),
 
+      ListTile(
+        leading: const Icon(Icons.home, color: Colors.white),
+        title: const Text(
+          "Home",
+          style: TextStyle(color: Colors.white),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+
+      ListTile(
+        leading: const Icon(Icons.favorite, color: Colors.white),
+        title: const Text(
+          "Favorites",
+          style: TextStyle(color: Colors.white),
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FavoritePage(),
+            ),
+          );
+        },
+      ),
+
+      ListTile(
+        leading: const Icon(Icons.settings, color: Colors.white),
+        title: const Text(
+          "Settings",
+          style: TextStyle(color: Colors.white),
+        ),
+        onTap: () {},
+      ),
+
+      const Divider(color: Colors.grey),
+
+      ListTile(
+        leading: const Icon(Icons.logout, color: Colors.red),
+        title: const Text(
+          "Logout",
+          style: TextStyle(color: Colors.red),
+        ),
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+        },
+      ),
+    ],
+  ),
+),
       body: Stack(
         children: [
           Positioned.fill(

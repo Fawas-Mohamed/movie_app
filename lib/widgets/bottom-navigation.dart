@@ -12,35 +12,49 @@ class AppBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      backgroundColor: Colors.black,
-      currentIndex: currentIndex,
-      selectedItemColor: const Color.fromARGB(255, 242, 255, 57),
-      unselectedItemColor: Colors.grey,
-      type: BottomNavigationBarType.fixed,
-
-      onTap: onTap,
-
-      items: const [
-
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Home",
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey,
+            width: 0.2, // very thin line like Netflix
+          ),
         ),
+      ),
+      child: BottomNavigationBar(
+        elevation: 0,
+        backgroundColor: Colors.black,
+        currentIndex: currentIndex,
+        selectedItemColor: Color.fromARGB(255, 242, 255, 57),
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: true,
+        showSelectedLabels: true,
+        onTap: onTap,
+        items: const [
 
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: "Favorites",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bookmark),
-          label: "Wachlist",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: "Profile",
-        ),
-      ],
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: "Favorites",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark),
+            label: "Watchlist",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
+      ),
     );
   }
 }
