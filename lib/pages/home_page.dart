@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/pages/favorite_page.dart';
+import 'package:movieapp/pages/profile_page.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 import 'package:movieapp/widgets/movie-list.dart';
@@ -155,11 +156,11 @@ class _HomePageState extends State<HomePage> {
                 user?.email?.substring(0, 5).toLowerCase() ?? "U",
               ),
               currentAccountPicture: CircleAvatar(
+                child:ElevatedButton(onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));}, child:Text(user?.email?.substring(0, 1).toUpperCase() ?? "U",
+                  style: const TextStyle(color: Colors.black),) ),
                 backgroundColor: const Color.fromARGB(255, 242, 255, 57),
-                child: Text(
-                  user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                  style: const TextStyle(color: Colors.black),
-                ),
+
               ),
             ),
 

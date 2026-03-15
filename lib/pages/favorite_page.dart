@@ -15,7 +15,6 @@ class FavoritePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-
           /// BACKGROUND IMAGE
           Positioned.fill(
             child: Image.network(
@@ -35,14 +34,15 @@ class FavoritePage extends StatelessWidget {
           SafeArea(
             child: Column(
               children: [
-
                 /// TOP BAR
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       /// BACK BUTTON
                       IconButton(
                         icon: const Icon(
@@ -62,17 +62,15 @@ class FavoritePage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text(
-                        " You Can Add Your Favorite Movies Here ❤️",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 242, 255, 57),
-                          fontSize: 16
-                        ),
-                      ),
 
                       CircleAvatar(
                         radius: 18,
-                        backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                        backgroundColor: const Color.fromARGB(
+                          255,
+                          242,
+                          255,
+                          57,
+                        ),
                         child: Text(
                           user?.email?.substring(0, 1).toUpperCase() ?? "U",
                           style: const TextStyle(color: Colors.black),
@@ -80,6 +78,17 @@ class FavoritePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      " You Can Add Your Favorite Movies Here ❤️",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 242, 255, 57),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
                 ),
 
                 /// FAVORITES LIST
@@ -92,21 +101,15 @@ class FavoritePage extends StatelessWidget {
                         .snapshots(),
 
                     builder: (context, snapshot) {
-
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return const Center(child: CircularProgressIndicator());
                       }
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                         return const Center(
                           child: Text(
-                            "No Favorite Movies Yet ❤️",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                            "No Favorite Movies Yet",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         );
                       }
@@ -118,16 +121,15 @@ class FavoritePage extends StatelessWidget {
 
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.65,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 10,
-                        ),
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.65,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 10,
+                            ),
 
                         itemCount: movies.length,
 
                         itemBuilder: (context, index) {
-
                           final movieData =
                               movies[index].data() as Map<String, dynamic>;
 

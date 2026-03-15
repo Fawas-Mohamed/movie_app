@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/main_navigation.dart';
 import 'package:movieapp/pages/signin_page.dart';
 
