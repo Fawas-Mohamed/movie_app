@@ -41,4 +41,7 @@ class FavoriteService {
   static Stream<bool> isFavorite(String movieId) {
     return favRef.doc(movieId).snapshots().map((doc) => doc.exists);
   }
+  static  Stream<int> favoriteCount(){
+    return favRef.snapshots().map((snapshot)=>snapshot.docs.length);
+  }
 }

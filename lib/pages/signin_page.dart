@@ -50,9 +50,15 @@ class _SigninPageState extends State<SigninPage> {
       child: TextField(
         controller: controller,
         obscureText: obscure,
+        style: const TextStyle( color: Colors.white),
         decoration: InputDecoration(
           hintText: hint,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          hintStyle: const TextStyle(color: Colors.white60),
+          filled: true,
+          fillColor: Colors.grey[900],
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+          ),
         ),
       ),
     );
