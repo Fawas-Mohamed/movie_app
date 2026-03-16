@@ -14,6 +14,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
 
@@ -38,142 +39,158 @@ class ProfilePage extends StatelessWidget {
 
           SafeArea(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height,
+                ),
+                child: Column(
+                  children: [
 
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                  /// Top Bar
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Color.fromARGB(255, 242, 255, 57),
+                    /// Top Bar
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Color.fromARGB(255, 242, 255, 57),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
 
-                        const Expanded(
-                          child: Center(
-                            child: Text(
-                              "Profile",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 242, 255, 57),
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
+                          const Expanded(
+                            child: Center(
+                              child: Text(
+                                "Profile",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 242, 255, 57),
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
-                        ),
 
-                        const SizedBox(width: 48),
+                          const SizedBox(width: 48),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    /// Profile Header
+                    const ProfileHeader(),
+
+                    const SizedBox(height: 30),
+
+                    /// Stats Cards
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        ProfileStatCard(
+                          icon: Icons.favorite,
+                          title: "Favorites",
+                          value: "2",
+                        ),
+                        ProfileStatCard(
+                          icon: Icons.bookmark,
+                          title: "Watchlist",
+                          value: "5",
+                        ),
+                        ProfileStatCard(
+      icon: Icons.movie,
+      title: "Watched",
+      value: "25",
+    ),
                       ],
                     ),
-                  ),
 
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 30),
 
-                  /// Profile Header
-                  const ProfileHeader(),
-
-                  const SizedBox(height: 30),
-
-                  /// Stats Cards
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      ProfileStatCard(
-                        icon: Icons.favorite,
-                        title: "Favorites",
-                        value: "2",
-                      ),
-                      ProfileStatCard(
-                        icon: Icons.bookmark,
-                        title: "Watchlist",
-                        value: "5",
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  /// Menu Tiles
-                  ProfileMenuTile(
-                    icon: Icons.favorite,
-                    title: "My Favorites",
-                    onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const FavoritePage(),
-            ),
-          );
-        },
-                  ),
-
-                  ProfileMenuTile(
-                    icon: Icons.bookmark,
-                    title: "My Watchlist",
-                    onTap: () {
-                      Navigator.push(context, 
-                      MaterialPageRoute(builder: (context) => const Watchlistpage()),
-                      );
-                    },
-                  ),
-
-                  ProfileMenuTile(
-                    icon: Icons.settings,
-                    title: "Settings",
-                    onTap: () {},
-                  ),
-
-                  ProfileMenuTile(
-                    icon: Icons.info,
-                    title: "About App",
-                    onTap: () {},
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  /// Logout Button
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                    /// Menu Tiles
+                    ProfileMenuTile(
+                      icon: Icons.favorite,
+                      title: "My Favorites",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FavoritePage(),
                           ),
-                        ),
-                        onPressed: () async {
-                          await FirebaseAuth.instance.signOut();
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SigninPage()));
-                        },
-                        child: const Text(
-                          "Logout",
-                          style: TextStyle(fontSize: 16),
+                        );
+                      },
+                    ),
+
+                    ProfileMenuTile(
+                      icon: Icons.bookmark,
+                      title: "My Watchlist",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Watchlistpage(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    ProfileMenuTile(
+                      icon: Icons.settings,
+                      title: "Settings",
+                      onTap: () {},
+                    ),
+
+                    ProfileMenuTile(
+                      icon: Icons.info,
+                      title: "About App",
+                      onTap: () {},
+                    ),
+
+                    const SizedBox(height: 30),
+
+                    /// Logout Button
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: () async {
+                            await FirebaseAuth.instance.signOut();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SigninPage(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Logout",
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  const SizedBox(height: 110),
-                ],
+                    const SizedBox(height: 110),
+                  ],
+                ),
               ),
             ),
           ),
-          
         ],
-        
       ),
     );
   }
