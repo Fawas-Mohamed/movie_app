@@ -3,6 +3,7 @@ import 'package:flutter_rating/flutter_rating.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/services/api_service.dart';
+import 'package:movieapp/services/watched_service.dart';
 import 'package:movieapp/widgets/movie-list.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -70,6 +71,7 @@ class _MyWidgetState extends State<MyWidget> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {
+                        await WatchedService.saveWatched(widget.movie);
                         final key = await ApiService.fetchTrailer(
                           widget.movie.id,
                         );

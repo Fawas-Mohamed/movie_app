@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/pages/signin_page.dart';
 import 'package:movieapp/pages/watchlist-page.dart';
+import 'package:movieapp/services/watched_service.dart';
 import 'package:movieapp/widgets/profile_header.dart';
 import 'package:movieapp/widgets/profile_menu_tile.dart';
 import 'package:movieapp/widgets/profile_stat_card.dart';
@@ -17,7 +18,6 @@ class ProfilePage extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-
           /// Background Image
           Positioned.fill(
             child: Image.network(
@@ -45,7 +45,6 @@ class ProfilePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-
                     const SizedBox(height: 10),
 
                     /// Top Bar
@@ -91,22 +90,27 @@ class ProfilePage extends StatelessWidget {
                     /// Stats Cards
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        ProfileStatCard(
+                      children: [
+                        const ProfileStatCard(
                           icon: Icons.favorite,
                           title: "Favorites",
                           value: "2",
                         ),
-                        ProfileStatCard(
-                          icon: Icons.bookmark,
-                          title: "Watchlist",
-                          value: "5",
+                        StreamBuilder<int>(
+                          stream: WatchedService.watchedCount(),
+                          builder: (context, snapshot) {
+                            return ProfileStatCard(
+                              icon: Icons.movie,
+                              title: "Watched",
+                              value: snapshot.data?.toString() ?? "0",
+                            );
+                          },
                         ),
-                        ProfileStatCard(
-      icon: Icons.movie,
-      title: "Watched",
-      value: "25",
-    ),
+                        const ProfileStatCard(
+                          icon: Icons.movie,
+                          title: "Watched",
+                          value: "25",
+                        ),
                       ],
                     ),
 
