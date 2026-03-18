@@ -21,7 +21,7 @@ class FavoritePage extends StatelessWidget {
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-    return Container(color: Colors.black);
+                return Container(color: Colors.black);
               },
             ),
           ),
@@ -46,17 +46,7 @@ class FavoritePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      /// BACK BUTTON
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: Color.fromARGB(255, 242, 255, 57),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-
+                      SizedBox(width: 50),
                       const Text(
                         "Favorite Movies",
                         style: TextStyle(
@@ -65,7 +55,6 @@ class FavoritePage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                       CircleAvatar(
                         radius: 18,
                         backgroundColor: const Color.fromARGB(

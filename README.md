@@ -1,4 +1,4 @@
-# movieapp
+# movieapp-PopcornPal
 
 A First Flutter project.
 

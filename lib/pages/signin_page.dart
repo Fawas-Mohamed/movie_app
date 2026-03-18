@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/register_page.dart';
+import 'package:movieapp/pages/main_navigation.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -26,9 +27,9 @@ class _SigninPageState extends State<SigninPage> {
         password: passwordController.text.trim(),
       );
       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+  context,
+  MaterialPageRoute(builder: (context) => const MainNavigation()),
+);
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,

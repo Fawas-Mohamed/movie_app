@@ -52,16 +52,6 @@ class ProfilePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: Color.fromARGB(255, 242, 255, 57),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-
                           const Expanded(
                             child: Center(
                               child: Text(
@@ -74,8 +64,6 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          const SizedBox(width: 48),
                         ],
                       ),
                     ),
@@ -173,11 +161,12 @@ class ProfilePage extends StatelessWidget {
                           ),
                           onPressed: () async {
                             await FirebaseAuth.instance.signOut();
-                            Navigator.push(
+                            Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const SigninPage(),
                               ),
+                              (route) => false,
                             );
                           },
                           child: const Text(
