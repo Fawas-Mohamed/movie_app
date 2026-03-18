@@ -1,9 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:movieapp/pages/favorite_page.dart';
+import 'package:movieapp/controller/tab_controller.dart';
 import 'package:movieapp/pages/signin_page.dart';
-import 'package:movieapp/pages/watchlist-page.dart';
 import 'package:movieapp/services/watched_service.dart';
 import 'package:movieapp/widgets/profile_header.dart';
 import 'package:movieapp/widgets/profile_menu_tile.dart';
@@ -109,25 +108,19 @@ class ProfilePage extends StatelessWidget {
                       icon: Icons.favorite,
                       title: "My Favorites",
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FavoritePage(),
-                          ),
-                        );
+                        TabControllerNotifier.changeTab(
+                          1,
+                        ); // switch to Favorite tab
                       },
                     ),
 
                     ProfileMenuTile(
-                      icon: Icons.bookmark,
+                      icon: Icons.favorite,
                       title: "My Watchlist",
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Watchlistpage(),
-                          ),
-                        );
+                        TabControllerNotifier.changeTab(
+                          2,
+                        ); // switch to Favorite tab
                       },
                     ),
 
