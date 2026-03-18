@@ -11,16 +11,22 @@ class AppBottomNav extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        border: Border(
-          top: BorderSide(
-            color: Colors.grey,
-            width: 0.2, // very thin line like Netflix
-          ),
+Widget build(BuildContext context) {
+  return Container(
+    decoration: const BoxDecoration(
+      color: Colors.black,
+      border: Border(
+        top: BorderSide(
+          color: Colors.grey,
+          width: 0.2,
         ),
+      ),
+      
+    ),
+    child: Theme(
+      data: Theme.of(context).copyWith(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
       ),
       child: BottomNavigationBar(
         elevation: 0,
@@ -33,28 +39,25 @@ class AppBottomNav extends StatelessWidget {
         showSelectedLabels: true,
         onTap: onTap,
         items: const [
-
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Home",
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: "Favorites",
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark),
             label: "Watchlist",
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: "Profile",
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

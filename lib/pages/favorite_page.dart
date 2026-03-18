@@ -13,6 +13,7 @@ class FavoritePage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           /// BACKGROUND IMAGE

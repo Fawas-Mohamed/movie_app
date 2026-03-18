@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/register_page.dart';
 import 'package:movieapp/pages/main_navigation.dart';
 
@@ -27,9 +26,9 @@ class _SigninPageState extends State<SigninPage> {
         password: passwordController.text.trim(),
       );
       Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(builder: (context) => const MainNavigation()),
-);
+        context,
+        MaterialPageRoute(builder: (context) => const MainNavigation()),
+      );
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -51,14 +50,15 @@ class _SigninPageState extends State<SigninPage> {
       child: TextField(
         controller: controller,
         obscureText: obscure,
-        style: const TextStyle( color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: const TextStyle(color: Colors.white60),
           filled: true,
           fillColor: Colors.grey[900],
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
           ),
         ),
       ),
@@ -78,7 +78,11 @@ class _SigninPageState extends State<SigninPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const Icon(Icons.movie, color: Color.fromARGB(255, 242, 255, 57), size: 80),
+                  const Icon(
+                    Icons.movie,
+                    color: Color.fromARGB(255, 242, 255, 57),
+                    size: 80,
+                  ),
 
                   const SizedBox(height: 20),
 
