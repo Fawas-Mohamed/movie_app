@@ -22,13 +22,25 @@ class MainNavigation extends StatelessWidget {
       valueListenable: TabControllerNotifier.currentIndex,
       builder: (context, currentIndex, _) {
         return Scaffold(
-          body: IndexedStack(
-            index: currentIndex,
-            children: pages,
-          ),
-          bottomNavigationBar: AppBottomNav(
-            currentIndex: currentIndex,
-            onTap: (index) => TabControllerNotifier.changeTab(index),
+          backgroundColor: Colors.black, // ✅ IMPORTANT
+          body: Stack(
+            children: [
+              /// Pages
+              Positioned.fill(
+                child: IndexedStack(index: currentIndex, children: pages),
+              ),
+
+              /// Bottom Navigation INSIDE body (fixes shadow)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: AppBottomNav(
+                  currentIndex: currentIndex,
+                  onTap: (index) => TabControllerNotifier.changeTab(index),
+                ),
+              ),
+            ],
           ),
         );
       },
