@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Watchlistpage extends StatefulWidget {
@@ -8,6 +11,7 @@ class Watchlistpage extends StatefulWidget {
 }
 
 class _WatchlistpageState extends State<Watchlistpage> {
+  final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
