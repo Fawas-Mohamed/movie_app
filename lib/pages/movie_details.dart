@@ -9,6 +9,7 @@ import 'package:movieapp/services/watchlist_service.dart';
 import 'package:movieapp/widgets/movie-list.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movieapp/services/cast_service.dart';
+import 'package:movieapp/services/recent_view.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final MovieModel movie;
@@ -20,6 +21,11 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
+  @override
+void initState() {
+  super.initState();
+  RecentlyViewedService.saveRecentlyViewed(widget.movie);
+}
   bool isTrailerLoading = false;
 
   Future<void> playTrailer() async {
