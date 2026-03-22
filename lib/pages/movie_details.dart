@@ -301,8 +301,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StarRating(
-                    rating: widget.movie.voteAverage,
-                    starCount: 10,
+                    rating: (widget.movie.voteAverage / 2.0),
+                    starCount: 5,
                     size: 22,
                   ),
                   Text(

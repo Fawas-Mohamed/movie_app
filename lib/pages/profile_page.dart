@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/controller/tab_controller.dart';
 import 'package:movieapp/pages/signin_page.dart';
+import 'package:movieapp/services/favorite_service.dart';
 import 'package:movieapp/services/watched_service.dart';
+import 'package:movieapp/services/watchlist_service.dart';
 import 'package:movieapp/widgets/profile_header.dart';
 import 'package:movieapp/widgets/profile_menu_tile.dart';
 import 'package:movieapp/widgets/profile_stat_card.dart';
@@ -78,10 +80,11 @@ class ProfilePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const ProfileStatCard(
-                          icon: Icons.favorite,
-                          title: "Favorites",
-                          value: "2",
+                        StreamBuilder<int>(
+                          stream: FavoriteService.favoriteCount(),
+                          builder: (context, snapshot) {
+                            return ProfileStatCard(icon: Icons.favorite, title: "Favorite", value: snapshot.data?.toString()??"0");
+                          },
                         ),
                         StreamBuilder<int>(
                           stream: WatchedService.watchedCount(),
@@ -93,10 +96,15 @@ class ProfilePage extends StatelessWidget {
                             );
                           },
                         ),
-                        const ProfileStatCard(
-                          icon: Icons.movie,
-                          title: "Watched",
-                          value: "25",
+                        StreamBuilder<int>(
+                          stream: WatchlistService.watchlistCount(),
+                          builder: (context, snapshot) {
+                            return ProfileStatCard(
+                              icon: Icons.bookmark,
+                              title: "Watchlist",
+                              value: snapshot.data?.toString() ?? "0",
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -115,7 +123,7 @@ class ProfilePage extends StatelessWidget {
                     ),
 
                     ProfileMenuTile(
-                      icon: Icons.favorite,
+                      icon: Icons.bookmark,
                       title: "My Watchlist",
                       onTap: () {
                         TabControllerNotifier.changeTab(
