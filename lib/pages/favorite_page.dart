@@ -83,6 +83,7 @@ class FavoritePage extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 30,),
 
                 /// FAVORITES LIST
                 Expanded(
@@ -114,8 +115,8 @@ class FavoritePage extends StatelessWidget {
 
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.65,
+                              crossAxisCount: 3,
+                              childAspectRatio: 0.6,
                               crossAxisSpacing: 5,
                               mainAxisSpacing: 10,
                             ),

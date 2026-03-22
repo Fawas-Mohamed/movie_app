@@ -1,228 +1,92 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating/flutter_rating.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
-import 'package:movieapp/services/api_service.dart';
-import 'package:movieapp/services/watched_service.dart';
-import 'package:movieapp/widgets/movie-list.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:movieapp/pages/movie_details.dart';
+import 'package:movieapp/services/favorite_service.dart';
 
-class MovieDetailsPage extends StatefulWidget {
+class MovieCart extends StatelessWidget {
   final MovieModel movie;
 
-  const MovieDetailsPage({super.key, required this.movie});
-
-  @override
-  State<MovieDetailsPage> createState() => _MovieDetailsPageState();
-}
-
-class _MovieDetailsPageState extends State<MovieDetailsPage> {
-  bool isTrailerLoading = false;
-
-  Future<void> _playTrailer() async {
-    setState(() {
-      isTrailerLoading = true;
-    });
-
-    try {
-      await WatchedService.saveWatched(widget.movie);
-
-      final key = await ApiService.fetchTrailer(widget.movie.id);
-
-      if (key != null && key.isNotEmpty) {
-        final uri = Uri.parse("https://www.youtube.com/watch?v=$key");
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Trailer not available")),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Something went wrong")),
-      );
-    } finally {
-      if (mounted) {
-        setState(() {
-          isTrailerLoading = false;
-        });
-      }
-    }
-  }
+  const MovieCart({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MovieDetailsPage(movie: movie)),
+        );
+      },
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: Stack(
+            alignment: Alignment.bottomLeft,
+            children: [
+              Hero(
+                tag: movie.id,
+                child: Image.network(
+                  '${AppConstants.baseImageUrl}${movie.posterPath}',
+                  height: 300,
+                  width: 180,
+                  fit: BoxFit.cover,
+                ),
+              ),
 
-    final heroImage =
-        widget.movie.backdropPath.isNotEmpty
-            ? '${AppConstants.baseImageUrl}/${widget.movie.posterPath}'
-            :'${AppConstants.baseImageUrl}/${widget.movie.backdropPath}' ;
-
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.black,
-            expandedHeight: size.height * 0.5,
-            pinned: true,
-            leading: Padding(
-              padding: const EdgeInsets.all(8),
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 242, 255, 57),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                    size: 18,
+              Container(
+                height: 230,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.center,
+                    colors: [Colors.black87, Colors.transparent],
                   ),
                 ),
               ),
-            ),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.network(
-                    heroImage,
-                    fit: BoxFit.cover,
+
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  movie.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.25),
-                          Colors.black.withOpacity(0.65),
-                          Colors.black,
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 20,
-                    right: 20,
-                    bottom: 30,
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: isTrailerLoading ? null : _playTrailer,
-                          child: Container(
-                            width: 72,
-                            height: 72,
-                            decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 242, 255, 57),
-                              shape: BoxShape.circle,
-                            ),
-                            child: isTrailerLoading
-                                ? const Padding(
-                                    padding: EdgeInsets.all(20),
-                                    child: CircularProgressIndicator(
-                                      color: Colors.black,
-                                      strokeWidth: 3,
-                                    ),
-                                  )
-                                : const Icon(
-                                    Icons.play_arrow,
-                                    size: 42,
-                                    color: Colors.black,
-                                  ),
-                          ),
-                        ),
-                        const SizedBox(height: 18),
-                        Text(
-                          widget.movie.title,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: StreamBuilder<bool>(
+                  stream: FavoriteService.isFavorite(movie.id.toString()),
+                  builder: (context, snapshot) {
+                    bool isFav = snapshot.data ?? false;
 
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Column(
-                children: [
-                  StarRating(
-                    rating: widget.movie.voteAverage,
-                    starCount: 10,
-                    size: 22,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    "${widget.movie.voteAverage.toStringAsFixed(1)}/10  •  ${widget.movie.originalLanguage.toUpperCase()}  •  ${widget.movie.releaseDate.year}",
-                    style: TextStyle(
-                      color: Colors.grey.shade400,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Overview",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    return IconButton(
+                      icon: Icon(
+                        isFav ? Icons.favorite : Icons.favorite_border,
+                        color: isFav ? Colors.red : Colors.white,
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    widget.movie.overview.isNotEmpty
-                        ? widget.movie.overview
-                        : "No overview available.",
-                    style: TextStyle(
-                      color: Colors.grey.shade300,
-                      fontSize: 15,
-                      height: 1.6,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                  const SizedBox(height: 30),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Upcoming",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                ],
+                      onPressed: () {
+                        if (isFav) {
+                          FavoriteService.removeFavorite(movie.id.toString());
+                        } else {
+                          FavoriteService.addFavorite(movie);
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
+            ],
           ),
-
-          const SliverToBoxAdapter(
-            child: MovieList(type: 'upcoming'),
-          ),
-
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 24),
-          ),
-        ],
+        ),
       ),
     );
   }

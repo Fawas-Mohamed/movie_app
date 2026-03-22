@@ -12,7 +12,7 @@ class MainNavigation extends StatelessWidget {
   final List<Widget> pages = const [
     HomePage(),
     FavoritePage(),
-    Watchlistpage(),
+    WatchlistPage(),
     ProfilePage(),
   ];
 
