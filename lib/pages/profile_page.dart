@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/controller/tab_controller.dart';
+import 'package:movieapp/pages/about_page.dart';
+import 'package:movieapp/pages/setting_page.dart';
 import 'package:movieapp/pages/signin_page.dart';
 import 'package:movieapp/services/favorite_service.dart';
 import 'package:movieapp/services/watched_service.dart';
@@ -83,7 +85,11 @@ class ProfilePage extends StatelessWidget {
                         StreamBuilder<int>(
                           stream: FavoriteService.favoriteCount(),
                           builder: (context, snapshot) {
-                            return ProfileStatCard(icon: Icons.favorite, title: "Favorite", value: snapshot.data?.toString()??"0");
+                            return ProfileStatCard(
+                              icon: Icons.favorite,
+                              title: "Favorite",
+                              value: snapshot.data?.toString() ?? "0",
+                            );
                           },
                         ),
                         StreamBuilder<int>(
@@ -135,13 +141,27 @@ class ProfilePage extends StatelessWidget {
                     ProfileMenuTile(
                       icon: Icons.settings,
                       title: "Settings",
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsPage(),
+                          ),
+                        );
+                      },
                     ),
 
                     ProfileMenuTile(
                       icon: Icons.info,
                       title: "About App",
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AboutPage(),
+                          ),
+                        );
+                      },
                     ),
 
                     const SizedBox(height: 30),

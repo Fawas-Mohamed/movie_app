@@ -16,7 +16,6 @@ class FavoritePage extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          /// BACKGROUND IMAGE
           Positioned.fill(
             child: Image.network(
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
@@ -78,14 +77,13 @@ class FavoritePage extends StatelessWidget {
                       " You Can Add Your Favorite Movies Here ❤️",
                       style: TextStyle(
                         color: Color.fromARGB(255, 242, 255, 57),
-                        fontSize: 16,
+                        fontSize: 12,
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 30,),
 
-                /// FAVORITES LIST
                 Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance

@@ -30,7 +30,6 @@ class MainNavigation extends StatelessWidget {
                 child: IndexedStack(index: currentIndex, children: pages),
               ),
 
-              /// Bottom Navigation INSIDE body (fixes shadow)
               Positioned(
                 left: 0,
                 right: 0,
