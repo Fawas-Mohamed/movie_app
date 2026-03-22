@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/pages/profile_page.dart';
+import 'package:movieapp/pages/setting_page.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 import 'package:movieapp/widgets/movie-list.dart';
@@ -221,7 +222,14 @@ class _HomePageState extends State<HomePage> {
           "Settings",
           style: TextStyle(color: Colors.white),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SettingsPage(),
+            ),
+          );
+        },
       ),
 
       const Divider(color: Colors.grey),
