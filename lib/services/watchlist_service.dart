@@ -32,10 +32,13 @@ class WatchlistService {
       "vote_count": movie.voteCount,
     });
   }
-  static Future<void> deleteWachlist(String movieId) async{
+  static Future<void> deleteWatchlist(String movieId) async{
     await WatchlistRef.doc(movieId).delete();
   }
   static Stream<int> watchlistCount(){
     return WatchlistRef.snapshots().map((snapshot)=>snapshot.docs.length);
+  }
+   static Stream<bool> isInWatchlist(String movieId) {
+    return WatchlistRef.doc(movieId).snapshots().map((doc) => doc.exists);
   }
 }

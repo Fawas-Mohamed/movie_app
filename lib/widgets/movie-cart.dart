@@ -15,7 +15,7 @@ class MovieCart extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MyWidget(movie: movie)),
+          MaterialPageRoute(builder: (context) => MovieDetailsPage(movie: movie)),
         );
       },
       child: Container(
