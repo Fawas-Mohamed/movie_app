@@ -10,6 +10,7 @@ import 'package:movieapp/pages/setting_page.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 import 'package:movieapp/widgets/movie-list.dart';
+import 'package:movieapp/widgets/recently_viewed_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +34,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     loadBannerMovies();
 
     _searchController.addListener(() {
@@ -41,8 +41,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future loadBannerMovies() async {
+  Future<void> loadBannerMovies() async {
     final movies = await ApiService.fetchMovies("popular");
+
+    if (!mounted) return;
 
     setState(() {
       bannerMovies = movies.take(5).toList();
@@ -56,6 +58,7 @@ class _HomePageState extends State<HomePage> {
       query = query.trim();
 
       if (query.isEmpty) {
+        if (!mounted) return;
         setState(() {
           isSearching = false;
           searchResults = [];
@@ -70,6 +73,7 @@ class _HomePageState extends State<HomePage> {
 
       final results = await ApiService.searchMovies(query);
 
+      if (!mounted) return;
       setState(() {
         searchResults = results;
         isLoading = false;
@@ -86,7 +90,14 @@ class _HomePageState extends State<HomePage> {
 
   Widget bannerSlider() {
     if (bannerMovies.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
+      return const SizedBox(
+        height: 160,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: Color.fromARGB(255, 242, 255, 57),
+          ),
+        ),
+      );
     }
 
     return CarouselSlider(
@@ -105,25 +116,39 @@ class _HomePageState extends State<HomePage> {
                 "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
                 width: double.infinity,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.black,
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.broken_image,
+                      color: Colors.white54,
+                    ),
+                  );
+                },
               ),
             ),
-
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+                  colors: [
+                    Colors.black.withOpacity(0.8),
+                    Colors.transparent,
+                  ],
                 ),
               ),
             ),
-
             Positioned(
               bottom: 10,
               left: 10,
+              right: 10,
               child: Text(
                 movie.title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -137,116 +162,156 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget buildSearchResults() {
+    if (isLoading) {
+      return const Padding(
+        padding: EdgeInsets.all(20),
+        child: Center(
+          child: CircularProgressIndicator(
+            color: Color.fromARGB(255, 242, 255, 57),
+          ),
+        ),
+      );
+    }
+
+    if (searchResults.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(20),
+        child: Center(
+          child: Text(
+            "No Movies Found",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: searchResults
+            .map((movie) => MovieCart(movie: movie))
+            .toList(),
+      ),
+    );
+  }
+
+  Widget buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-  width: 220,
-  backgroundColor: Colors.black,
-  child: ListView(
-    padding: EdgeInsets.zero,
-    children: [
-
-      UserAccountsDrawerHeader(
-        currentAccountPictureSize: Size(50, 50),
-        decoration: const BoxDecoration(
-          color: Colors.black,
-        ),
-        accountName: const Text(
-          "Welcome",
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-
-        accountEmail: Text(
-          user?.email ?? "user@email.com",
-          style: const TextStyle(color: Colors.grey),
-        ),
-
-        currentAccountPicture: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
+        width: 220,
+        backgroundColor: Colors.black,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              currentAccountPictureSize: const Size(50, 50),
+              decoration: const BoxDecoration(color: Colors.black),
+              accountName: const Text(
+                "Welcome",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            );
-          },
-          child: CircleAvatar(
-            backgroundColor: Color.fromARGB(255, 242, 255, 57),
-            child: Text(
-              user?.email?.substring(0, 1).toUpperCase() ?? "U",
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+              accountEmail: Text(
+                user?.email ?? "user@email.com",
+                style: const TextStyle(color: Colors.grey),
+              ),
+              currentAccountPicture: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfilePage(),
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                  child: Text(
+                    user?.email?.substring(0, 1).toUpperCase() ?? "U",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ),
-
-      ListTile(
-        leading: const Icon(Icons.home, color: Colors.white),
-        title: const Text(
-          "Home",
-          style: TextStyle(color: Colors.white),
-        ),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-
-      ListTile(
-        leading: const Icon(Icons.favorite, color: Colors.white),
-        title: const Text(
-          "Favorites",
-          style: TextStyle(color: Colors.white),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const FavoritePage(),
+            ListTile(
+              leading: const Icon(Icons.home, color: Colors.white),
+              title: const Text(
+                "Home",
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
-          );
-        },
-      ),
-
-      ListTile(
-        leading: const Icon(Icons.settings, color: Colors.white),
-        title: const Text(
-          "Settings",
-          style: TextStyle(color: Colors.white),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const SettingsPage(),
+            ListTile(
+              leading: const Icon(Icons.favorite, color: Colors.white),
+              title: const Text(
+                "Favorites",
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FavoritePage(),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
-
-      const Divider(color: Colors.grey),
-
-      ListTile(
-        leading: const Icon(Icons.logout, color: Colors.red),
-        title: const Text(
-          "Logout",
-          style: TextStyle(color: Colors.red),
+            ListTile(
+              leading: const Icon(Icons.settings, color: Colors.white),
+              title: const Text(
+                "Settings",
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage(),
+                  ),
+                );
+              },
+            ),
+            const Divider(color: Colors.grey),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.red),
+              ),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+              },
+            ),
+          ],
         ),
-        onTap: () async {
-          await FirebaseAuth.instance.signOut();
-        },
       ),
-    ],
-  ),
-),
       body: Stack(
         children: [
           Positioned.fill(
@@ -254,24 +319,22 @@ class _HomePageState extends State<HomePage> {
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-    return Container(color: Colors.black);
+                return Container(color: Colors.black);
               },
             ),
           ),
-
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
               child: Container(color: Colors.black.withOpacity(0.1)),
             ),
           ),
-
           SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -289,7 +352,6 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
-
                         const Text(
                           "PopcornPals",
                           style: TextStyle(
@@ -298,10 +360,10 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.w900,
                           ),
                         ),
-
                         CircleAvatar(
                           radius: 18,
-                          backgroundColor: Color.fromARGB(255, 242, 255, 57),
+                          backgroundColor:
+                              const Color.fromARGB(255, 242, 255, 57),
                           child: Text(
                             user?.email?.substring(0, 1).toUpperCase() ?? "U",
                             style: const TextStyle(color: Colors.black),
@@ -310,6 +372,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
+
                   const Center(
                     child: Text(
                       "Discover Your Movies",
@@ -364,6 +427,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+
                   if (!isSearching) bannerSlider(),
 
                   AnimatedSwitcher(
@@ -383,95 +447,26 @@ class _HomePageState extends State<HomePage> {
                     child: isSearching
                         ? SizedBox(
                             key: const ValueKey('search'),
-                            child: Column(
-                              children: [
-                                if (isLoading)
-                                  const Padding(
-                                    padding: EdgeInsets.all(20),
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                if (!isLoading && searchResults.isEmpty)
-                                  const Padding(
-                                    padding: EdgeInsets.all(20),
-                                    child: Text(
-                                      "No Movies Found",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                if (!isLoading)
-                                  Column(
-                                    children: List.generate(
-                                      searchResults.length,
-                                      (index) => Row(
-                                        children: [
-                                          MovieCart(
-                                            movie: searchResults[index],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
+                            child: buildSearchResults(),
                           )
                         : const SizedBox(),
                   ),
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          'Popular Movies',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      MovieList(type: 'popular'),
+                  if (!isSearching) const RecentlyViewedSection(),
 
-                      Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          'Top Rated',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      MovieList(type: 'top_rated'),
+                  if (!isSearching) ...[
+                    buildSectionTitle('Popular Movies'),
+                    const MovieList(type: 'popular'),
 
-                      Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          'Upcoming',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      MovieList(type: 'upcoming'),
-                      Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          'Nowplaying',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      MovieList(type: 'now_playing'),
-                    ],
-                  ),
+                    buildSectionTitle('Top Rated'),
+                    const MovieList(type: 'top_rated'),
+
+                    buildSectionTitle('Upcoming'),
+                    const MovieList(type: 'upcoming'),
+
+                    buildSectionTitle('Now Playing'),
+                    const MovieList(type: 'now_playing'),
+                  ],
                 ],
               ),
             ),
