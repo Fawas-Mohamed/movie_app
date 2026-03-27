@@ -7,6 +7,7 @@ import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/services/favorite_service.dart';
 import 'package:movieapp/services/watchlist_service.dart';
 import 'package:movieapp/widgets/movie-list.dart';
+import 'package:movieapp/widgets/similar_movies_section.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movieapp/services/cast_service.dart';
 import 'package:movieapp/services/recent_view.dart';
@@ -357,13 +358,18 @@ void initState() {
                   const SizedBox(height: 20),
 
                   const Text(
-                    "Upcoming",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+  "Similar Movies",
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 21,
+    fontWeight: FontWeight.bold,
+  ),
+),
+const SizedBox(height: 12),
+
+SimilarMoviesSection(movieId: widget.movie.id),
+
+const SizedBox(height: 20),
                   const SizedBox(height: 12),
                 ],
               ),

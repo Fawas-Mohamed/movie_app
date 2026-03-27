@@ -71,4 +71,25 @@ class ApiService {
 
     return null;
   }
+  static Future<List<MovieModel>> fetchSimilarMovies(int movieId) async {
+    try{
+      final url = Uri.https("api.themoviedb.org", "/3/movie/$movieId/similar", {
+        "api_key": AppConstants.apiKey,
+      });
+      final response = await http.get(url);
+      if(response.statusCode == 200){
+        final decoded = jsonDecode(response.body);
+        final List results = decoded['results'] ?? [];
+
+      return results
+          .map<MovieModel>((json) => MovieModel.fromJson(json))
+          .toList();
+    } else {
+      return [];
+    }
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
 }
