@@ -6,15 +6,16 @@ class FavoriteService {
   static final user = FirebaseAuth.instance.currentUser;
 
   static CollectionReference get favRef {
-  if (user == null) {
-    throw Exception("User not logged in");
+    if (user == null) {
+      throw Exception("User not logged in");
+    }
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection('favorites');
   }
 
-  return FirebaseFirestore.instance
-      .collection('users')
-      .doc(user?.uid)
-      .collection('favorites');
-}
   static Future<void> addFavorite(MovieModel movie) async {
     await favRef.doc(movie.id.toString()).set({
       "adult": movie.adult,
@@ -41,7 +42,8 @@ class FavoriteService {
   static Stream<bool> isFavorite(String movieId) {
     return favRef.doc(movieId).snapshots().map((doc) => doc.exists);
   }
-  static  Stream<int> favoriteCount(){
-    return favRef.snapshots().map((snapshot)=>snapshot.docs.length);
+
+  static Stream<int> favoriteCount() {
+    return favRef.snapshots().map((snapshot) => snapshot.docs.length);
   }
 }

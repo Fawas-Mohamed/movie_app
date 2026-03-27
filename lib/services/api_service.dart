@@ -4,7 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:movieapp/models/moviemodel.dart';
 
 class ApiService {
-  static Future<List<MovieModel>> fetchMovies(String s, {String type = 'popular'}) async {
+  static Future<List<MovieModel>> fetchMovies(
+    String s, {
+    String type = 'popular',
+  }) async {
     try {
       final url = Uri.https("api.themoviedb.org", "/3/movie/$type", {
         "api_key": AppConstants.apiKey,
@@ -58,7 +61,7 @@ class ApiService {
 
         for (var video in results) {
           if (video['site'] == "YouTube" && video['type'] == "Trailer") {
-            return video['key']; 
+            return video['key'];
           }
         }
       }

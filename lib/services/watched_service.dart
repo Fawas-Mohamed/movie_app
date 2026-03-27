@@ -6,15 +6,16 @@ class WatchedService {
   static final user = FirebaseAuth.instance.currentUser;
 
   static CollectionReference get watchedRef {
-    if(user == null){
+    if (user == null) {
       throw Exception("User not logged in");
     }
     return FirebaseFirestore.instance
-      .collection('users')
-      .doc(user?.uid)
-      .collection('watched');
+        .collection('users')
+        .doc(user?.uid)
+        .collection('watched');
   }
-  static Future<void> saveWatched(MovieModel movie) async{
+
+  static Future<void> saveWatched(MovieModel movie) async {
     await watchedRef.doc(movie.id.toString()).set({
       "adult": movie.adult,
       "backdrop_path": movie.backdropPath,
@@ -32,11 +33,12 @@ class WatchedService {
       "vote_count": movie.voteCount,
     });
   }
-  
-  static Future<void> deleteWatched(String movieId) async{
+
+  static Future<void> deleteWatched(String movieId) async {
     await watchedRef.doc(movieId).delete();
   }
-  static Stream<int> watchedCount(){
-    return watchedRef.snapshots().map((snapshot)=>snapshot.docs.length);
+
+  static Stream<int> watchedCount() {
+    return watchedRef.snapshots().map((snapshot) => snapshot.docs.length);
   }
 }
