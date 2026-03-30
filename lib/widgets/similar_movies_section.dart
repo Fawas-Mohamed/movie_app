@@ -16,7 +16,9 @@ class SimilarMoviesSection extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
             height: 260,
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 242, 255, 57),
+              ),),
           );
         }
 
