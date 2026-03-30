@@ -8,6 +8,7 @@ import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/pages/profile_page.dart';
 import 'package:movieapp/pages/setting_page.dart';
 import 'package:movieapp/services/api_service.dart';
+import 'package:movieapp/widgets/app_background.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 import 'package:movieapp/widgets/movie-list.dart';
 import 'package:movieapp/widgets/recently_viewed_section.dart';
@@ -134,10 +135,7 @@ class _HomePageState extends State<HomePage> {
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.8),
-                    Colors.transparent,
-                  ],
+                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
                 ),
               ),
             ),
@@ -178,10 +176,7 @@ class _HomePageState extends State<HomePage> {
       return const Padding(
         padding: EdgeInsets.all(20),
         child: Center(
-          child: Text(
-            "No Movies Found",
-            style: TextStyle(color: Colors.white),
-          ),
+          child: Text("No Movies Found", style: TextStyle(color: Colors.white)),
         ),
       );
     }
@@ -260,10 +255,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text(
-                "Home",
-                style: TextStyle(color: Colors.white),
-              ),
+              title: const Text("Home", style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -277,9 +269,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const FavoritePage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const FavoritePage()),
                 );
               },
             ),
@@ -292,19 +282,14 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
                 );
               },
             ),
             const Divider(color: Colors.grey),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text(
-                "Logout",
-                style: TextStyle(color: Colors.red),
-              ),
+              title: const Text("Logout", style: TextStyle(color: Colors.red)),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
               },
@@ -312,166 +297,151 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.network(
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(color: Colors.black);
-              },
-            ),
-          ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: Container(color: Colors.black.withOpacity(0.1)),
-            ),
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 15),
+      body: AppBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 15),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Builder(
-                          builder: (context) => IconButton(
-                            icon: const Icon(
-                              Icons.read_more,
-                              color: Color.fromARGB(255, 242, 255, 57),
-                            ),
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                          ),
-                        ),
-                        const Text(
-                          "PopcornPals",
-                          style: TextStyle(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Builder(
+                        builder: (context) => IconButton(
+                          icon: const Icon(
+                            Icons.read_more,
                             color: Color.fromARGB(255, 242, 255, 57),
-                            fontSize: 28,
-                            fontWeight: FontWeight.w900,
                           ),
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
                         ),
-                        CircleAvatar(
-                          radius: 18,
-                          backgroundColor:
-                              const Color.fromARGB(255, 242, 255, 57),
-                          child: Text(
-                            user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                            style: const TextStyle(color: Colors.black),
-                          ),
+                      ),
+                      const Text(
+                        "PopcornPals",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 242, 255, 57),
+                          fontSize: 28,
+                          fontWeight: FontWeight.w900,
                         ),
-                      ],
+                      ),
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: const Color.fromARGB(
+                          255,
+                          242,
+                          255,
+                          57,
+                        ),
+                        child: Text(
+                          user?.email?.substring(0, 1).toUpperCase() ?? "U",
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const Center(
+                  child: Text(
+                    "Discover Your Movies",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 242, 255, 57),
+                      fontSize: 12,
                     ),
                   ),
+                ),
 
-                  const Center(
-                    child: Text(
-                      "Discover Your Movies",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 242, 255, 57),
-                        fontSize: 12,
+                const SizedBox(height: 20),
+
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(color: Colors.white.withOpacity(0.2)),
+                    ),
+                    child: TextField(
+                      controller: _searchController,
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: onSearchChanged,
+                      onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                      decoration: InputDecoration(
+                        hintText: "Search movies...",
+                        hintStyle: const TextStyle(color: Colors.white70),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        suffixIcon: _searchController.text.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  _searchController.clear();
+                                  setState(() {
+                                    isSearching = false;
+                                    searchResults = [];
+                                  });
+                                },
+                              )
+                            : null,
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
+                ),
 
-                  const SizedBox(height: 20),
+                if (!isSearching) bannerSlider(),
 
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.2),
-                        ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 0.05),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
                       ),
-                      child: TextField(
-                        controller: _searchController,
-                        style: const TextStyle(color: Colors.white),
-                        onChanged: onSearchChanged,
-                        onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                        decoration: InputDecoration(
-                          hintText: "Search movies...",
-                          hintStyle: const TextStyle(color: Colors.white70),
-                          prefixIcon: const Icon(
-                            Icons.search,
-                            color: Colors.white,
-                          ),
-                          suffixIcon: _searchController.text.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {
-                                    _searchController.clear();
-                                    setState(() {
-                                      isSearching = false;
-                                      searchResults = [];
-                                    });
-                                  },
-                                )
-                              : null,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ),
+                    );
+                  },
+                  child: isSearching
+                      ? SizedBox(
+                          key: const ValueKey('search'),
+                          child: buildSearchResults(),
+                        )
+                      : const SizedBox(),
+                ),
 
-                  if (!isSearching) bannerSlider(),
+                if (!isSearching) const RecentlyViewedSection(),
 
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    transitionBuilder: (child, animation) {
-                      return FadeTransition(
-                        opacity: animation,
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0, 0.05),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: isSearching
-                        ? SizedBox(
-                            key: const ValueKey('search'),
-                            child: buildSearchResults(),
-                          )
-                        : const SizedBox(),
-                  ),
+                if (!isSearching) ...[
+                  buildSectionTitle('Popular Movies'),
+                  const MovieList(type: 'popular'),
 
-                  if (!isSearching) const RecentlyViewedSection(),
+                  buildSectionTitle('Top Rated'),
+                  const MovieList(type: 'top_rated'),
 
-                  if (!isSearching) ...[
-                    buildSectionTitle('Popular Movies'),
-                    const MovieList(type: 'popular'),
+                  buildSectionTitle('Upcoming'),
+                  const MovieList(type: 'upcoming'),
 
-                    buildSectionTitle('Top Rated'),
-                    const MovieList(type: 'top_rated'),
-
-                    buildSectionTitle('Upcoming'),
-                    const MovieList(type: 'upcoming'),
-
-                    buildSectionTitle('Now Playing'),
-                    const MovieList(type: 'now_playing'),
-                  ],
+                  buildSectionTitle('Now Playing'),
+                  const MovieList(type: 'now_playing'),
                 ],
-              ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

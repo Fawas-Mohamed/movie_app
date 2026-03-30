@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/models/moviemodel.dart';
+import 'package:movieapp/widgets/app_background.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 
 class WatchlistPage extends StatelessWidget {
@@ -14,176 +15,157 @@ class WatchlistPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.network(
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0K-TbHTkelyQyrcrb-yk-J2G7KmOp66uow&s",
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(color: Colors.black);
-              },
-            ),
-          ),
-
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: Container(color: Colors.black.withOpacity(0.35)),
-            ),
-          ),
-
-          SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 40,
-                        child: Icon(
-                          Icons.bookmark,
-                          color: Color.fromARGB(255, 242, 255, 57),
-                        ),
+      body: AppBackground(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(
+                      width: 40,
+                      child: Icon(
+                        Icons.bookmark,
+                        color: Color.fromARGB(255, 242, 255, 57),
                       ),
-                      const Text(
-                        "My Watchlist",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 242, 255, 57),
-                          fontSize: 22,
+                    ),
+                    const Text(
+                      "My Watchlist",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 242, 255, 57),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    CircleAvatar(
+                      radius: 18,
+                      backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                      child: Text(
+                        user?.email?.substring(0, 1).toUpperCase() ?? "U",
+                        style: const TextStyle(
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user!.uid)
+                      .collection('watchlist')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Color.fromARGB(255, 242, 255, 57),
+                        ),
+                      );
+                    }
+
+                    if (snapshot.hasError) {
+                      return const Center(
                         child: Text(
-                          user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                          "Something went wrong",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return Center(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 24),
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.08),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.bookmark_border,
+                                color: Color.fromARGB(255, 242, 255, 57),
+                                size: 48,
+                              ),
+                              SizedBox(height: 12),
+                              Text(
+                                "No Movies in Watchlist Yet",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                "Add movies from the details page.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 14),
-
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(user!.uid)
-                        .collection('watchlist')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Color.fromARGB(255, 242, 255, 57),
-                          ),
-                        );
-                      }
-
-                      if (snapshot.hasError) {
-                        return const Center(
-                          child: Text(
-                            "Something went wrong",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        );
-                      }
-
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Center(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 24),
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.08),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.bookmark_border,
-                                  color: Color.fromARGB(255, 242, 255, 57),
-                                  size: 48,
-                                ),
-                                SizedBox(height: 12),
-                                Text(
-                                  "No Movies in Watchlist Yet",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(height: 6),
-                                Text(
-                                  "Add movies from the details page.",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-
-                      final movies = snapshot.data!.docs;
-
-                      return GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 16),
-                        itemCount: movies.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 0.6,
-                              crossAxisSpacing: 6,
-                              mainAxisSpacing: 10,
-                            ),
-                        itemBuilder: (context, index) {
-                          final movieData =
-                              movies[index].data() as Map<String, dynamic>;
-                          final movie = MovieModel.fromJson(movieData);
-
-                          return MovieCart(
-                            movie: movie,
-                            showRemoveWatchlistButton: true,
-                            onRemoveWatchlist: () async {
-                              await FirebaseFirestore.instance
-                                  .collection('users')
-                                  .doc(user.uid)
-                                  .collection('watchlist')
-                                  .doc(movie.id.toString())
-                                  .delete();
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Removed from watchlist"),
-                                  duration: Duration(seconds: 1),
-                                ),
-                              );
-                            },
-                          );
-                        },
                       );
-                    },
-                  ),
+                    }
+
+                    final movies = snapshot.data!.docs;
+
+                    return GridView.builder(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 16),
+                      itemCount: movies.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 0.6,
+                            crossAxisSpacing: 6,
+                            mainAxisSpacing: 10,
+                          ),
+                      itemBuilder: (context, index) {
+                        final movieData =
+                            movies[index].data() as Map<String, dynamic>;
+                        final movie = MovieModel.fromJson(movieData);
+
+                        return MovieCart(
+                          movie: movie,
+                          showRemoveWatchlistButton: true,
+                          onRemoveWatchlist: () async {
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('watchlist')
+                                .doc(movie.id.toString())
+                                .delete();
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Removed from watchlist"),
+                                duration: Duration(seconds: 1),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

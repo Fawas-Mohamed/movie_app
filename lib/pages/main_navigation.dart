@@ -22,7 +22,7 @@ class MainNavigation extends StatelessWidget {
       valueListenable: TabControllerNotifier.currentIndex,
       builder: (context, currentIndex, _) {
         return Scaffold(
-          backgroundColor: Colors.black, // ✅ IMPORTANT
+          backgroundColor: Colors.black,
           body: Stack(
             children: [
               /// Pages

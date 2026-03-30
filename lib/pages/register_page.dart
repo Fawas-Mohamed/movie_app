@@ -89,7 +89,11 @@ class _RegisterPageState extends State<RegisterPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const Icon(Icons.movie, color: Color.fromARGB(255, 242, 255, 57), size: 80),
+                  const Icon(
+                    Icons.movie,
+                    color: Color.fromARGB(255, 242, 255, 57),
+                    size: 80,
+                  ),
 
                   const SizedBox(height: 20),
 
