@@ -6,6 +6,7 @@ import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/services/favorite_service.dart';
 import 'package:movieapp/services/watchlist_service.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/similar_movies_section.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movieapp/services/cast_service.dart';
@@ -129,7 +130,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
             height: 130,
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(child: AppLoader()),
           );
         }
 
@@ -272,10 +273,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             child: isTrailerLoading
                                 ? const Padding(
                                     padding: EdgeInsets.all(18),
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.background,
-                                      strokeWidth: 3,
-                                    ),
+                                    child:AppLoader()
                                   )
                                 : const Icon(
                                     Icons.play_arrow,

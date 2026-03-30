@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 
 class WatchlistPage extends StatelessWidget {
@@ -67,9 +68,7 @@ class WatchlistPage extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primary,
-                        ),
+                        child: AppLoader()
                       );
                     }
 

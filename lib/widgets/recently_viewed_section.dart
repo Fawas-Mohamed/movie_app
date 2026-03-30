@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/models/moviemodel.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 
 class RecentlyViewedSection extends StatelessWidget {
@@ -35,14 +36,7 @@ class RecentlyViewedSection extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox(
-            height: 260,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Color.fromARGB(255, 242, 255, 57),
-              ),
-            ),
-          );
+          return const SizedBox(height: 260, child: Center(child: AppLoader()));
         }
 
         final docs = snapshot.data?.docs ?? [];

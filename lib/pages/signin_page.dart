@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/register_page.dart';
 import 'package:movieapp/pages/main_navigation.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -120,7 +121,7 @@ class _SigninPageState extends State<SigninPage> {
                       ),
                       onPressed: isLoading ? null : signInUser,
                       child: isLoading
-                          ? const CircularProgressIndicator(color: AppColors.background)
+                          ? const AppLoader()
                           : const Text(
                               "Sign In",
                               style: TextStyle(

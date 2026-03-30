@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/core/constants.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -10,8 +11,9 @@ class ProfileHeader extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
     final email = user?.email ?? "user@email.com";
     final username = email.split('@')[0];
-    final firstLetter =
-        email.isNotEmpty ? email.substring(0, 1).toUpperCase() : "U";
+    final firstLetter = email.isNotEmpty
+        ? email.substring(0, 1).toUpperCase()
+        : "U";
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -30,30 +32,26 @@ class ProfileHeader extends StatelessWidget {
             child: Column(
               children: [
                 GestureDetector(
-                onTap:(){
-                  ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Edit Profile coming soon")),
-    );
-
-                },
-                /// Avatar
-                child:CircleAvatar(
-                  radius: 45,
-                  backgroundColor: const Color.fromARGB(255, 242, 255, 57),
-                  child: Text(
-                    firstLetter,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Edit Profile coming soon")),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 45,
+                    backgroundColor: AppColors.primary,
+                    child: Text(
+                      firstLetter,
+                      style: const TextStyle(
+                        color: AppColors.background,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                ),
 
                 const SizedBox(height: 15),
-
-                /// Username
                 Text(
                   username,
                   style: const TextStyle(
@@ -65,15 +63,10 @@ class ProfileHeader extends StatelessWidget {
 
                 const SizedBox(height: 5),
 
-                /// Email
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.email,
-                      size: 16,
-                      color: Colors.white70,
-                    ),
+                    const Icon(Icons.email, size: 16, color: Colors.white70),
                     const SizedBox(width: 6),
                     Text(
                       email,

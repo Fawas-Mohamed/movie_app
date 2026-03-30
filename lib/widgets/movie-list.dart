@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/services/api_service.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 
 class MovieList extends StatefulWidget {
@@ -16,12 +17,10 @@ class _MovieListState extends State<MovieList> {
     return SizedBox(
       height: 300,
       child: FutureBuilder(
-        future: ApiService.fetchMovies(widget.type), 
+        future: ApiService.fetchMovies(widget.type),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(
-                color: Color.fromARGB(255, 242, 255, 57),
-              ),);
+            return const Center(child: AppLoader());
           } else if (snapshot.hasError) {
             return const Center(child: Text("Error"));
           } else if (!snapshot.hasData) {

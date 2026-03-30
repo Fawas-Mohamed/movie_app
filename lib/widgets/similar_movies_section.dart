@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/services/api_service.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 
 class SimilarMoviesSection extends StatelessWidget {
@@ -14,12 +15,7 @@ class SimilarMoviesSection extends StatelessWidget {
       future: ApiService.fetchSimilarMovies(movieId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox(
-            height: 260,
-            child: Center(child: CircularProgressIndicator(
-                color: Color.fromARGB(255, 242, 255, 57),
-              ),),
-          );
+          return const SizedBox(height: 260, child: Center(child: AppLoader()));
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {

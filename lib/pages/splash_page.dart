@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/auth_page.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -96,10 +97,7 @@ class _SplashPageState extends State<SplashPage>
                   const SizedBox(
                     width: 28,
                     height: 28,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: AppColors.primary,
-                    ),
+                    child: AppLoader()                 
                   ),
                 ],
               ),

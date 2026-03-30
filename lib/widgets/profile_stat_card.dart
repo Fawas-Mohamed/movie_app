@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/core/constants.dart';
 
 class ProfileStatCard extends StatelessWidget {
   final IconData icon;
@@ -20,14 +21,13 @@ class ProfileStatCard extends StatelessWidget {
 
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white24),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white24),
       ),
 
       child: Column(
         children: [
-
-          Icon(icon, color: const Color.fromARGB(255, 242, 255, 57)),
+          Icon(icon, color: AppColors.primary),
 
           const SizedBox(height: 8),
 
@@ -42,12 +42,7 @@ class ProfileStatCard extends StatelessWidget {
 
           const SizedBox(height: 5),
 
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.grey,
-            ),
-          ),
+          Text(title, style: const TextStyle(color: Colors.grey)),
         ],
       ),
     );

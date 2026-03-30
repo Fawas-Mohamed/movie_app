@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/pages/main_navigation.dart';
 import 'package:movieapp/pages/signin_page.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -13,7 +14,7 @@ class AuthPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: Center(child:AppLoader()),
           );
         } else if (snapshot.hasData) {
           return const MainNavigation();

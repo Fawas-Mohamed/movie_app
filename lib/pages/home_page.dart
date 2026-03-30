@@ -10,6 +10,7 @@ import 'package:movieapp/pages/profile_page.dart';
 import 'package:movieapp/pages/setting_page.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 import 'package:movieapp/widgets/movie-list.dart';
 import 'package:movieapp/widgets/recently_viewed_section.dart';
@@ -95,9 +96,7 @@ class _HomePageState extends State<HomePage> {
       return const SizedBox(
         height: 160,
         child: Center(
-          child: CircularProgressIndicator(
-            color: AppColors.primary,
-          ),
+          child:AppLoader(),
         ),
       );
     }
@@ -166,9 +165,7 @@ class _HomePageState extends State<HomePage> {
       return const Padding(
         padding: EdgeInsets.all(20),
         child: Center(
-          child: CircularProgressIndicator(
-            color: AppColors.primary,
-          ),
+          child: AppLoader()
         ),
       );
     }

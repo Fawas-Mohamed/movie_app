@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/core/constants.dart';
 
 class AppBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -14,10 +15,8 @@ class AppBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.black,
-        border: Border(
-          top: BorderSide(color: Color.fromARGB(255, 242, 255, 57), width: 0.3),
-        ),
+        color: AppColors.background,
+        border: Border(top: BorderSide(color: AppColors.primary, width: 0.3)),
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
@@ -26,9 +25,9 @@ class AppBottomNav extends StatelessWidget {
         ),
         child: BottomNavigationBar(
           elevation: 0,
-          backgroundColor: Colors.black,
+          backgroundColor: AppColors.background,
           currentIndex: currentIndex,
-          selectedItemColor: Color.fromARGB(255, 242, 255, 57),
+          selectedItemColor: AppColors.primary,
           unselectedItemColor: Colors.grey,
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: true,

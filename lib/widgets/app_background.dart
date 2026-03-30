@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:movieapp/core/constants.dart';
 
 class AppBackground extends StatelessWidget {
   final Widget child;
@@ -18,12 +19,11 @@ class AppBackground extends StatelessWidget {
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-            child: Container(color: Colors.black.withOpacity(0.3)),
+            child: Container(color: AppColors.background.withOpacity(0.3)),
           ),
         ),
         child,
       ],
     );
-  
   }
 }

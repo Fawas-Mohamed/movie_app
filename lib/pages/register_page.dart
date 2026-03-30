@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/signin_page.dart';
+import 'package:movieapp/widgets/app_loader.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -140,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: isLoading ? null : signUpUser,
 
                       child: isLoading
-                          ? const CircularProgressIndicator(color: AppColors.background)
+                          ? const AppLoader()
                           : const Text(
                               "Register",
                               style: TextStyle(

@@ -36,7 +36,7 @@ class MovieCart extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.35),
+              color: AppColors.background.withOpacity(0.35),
               blurRadius: 10,
               offset: const Offset(0, 6),
             ),
@@ -74,10 +74,7 @@ class MovieCart extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
                       end: Alignment.center,
-                      colors: [
-                        Colors.black87,
-                        Colors.transparent,
-                      ],
+                      colors: [Colors.black87, Colors.transparent],
                     ),
                   ),
                 ),
@@ -107,7 +104,7 @@ class MovieCart extends StatelessWidget {
                             margin: const EdgeInsets.only(bottom: 8),
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.45),
+                              color: AppColors.background.withOpacity(0.45),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
@@ -126,12 +123,12 @@ class MovieCart extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.45),
+                            color: AppColors.background.withOpacity(0.45),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.bookmark_remove,
-                            color: Color.fromARGB(255, 242, 255, 57),
+                            color: AppColors.primary,
                             size: 22,
                           ),
                         ),
@@ -149,7 +146,7 @@ class MovieCart extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.55),
+                    color: AppColors.background.withOpacity(0.55),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
