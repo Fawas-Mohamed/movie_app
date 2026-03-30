@@ -109,7 +109,7 @@ class MovieCart extends StatelessWidget {
                             ),
                             child: Icon(
                               isFav ? Icons.favorite : Icons.favorite_border,
-                              color: isFav ? Colors.red : Colors.white,
+                              color: isFav ? Colors.red : AppColors.secondary,
                               size: 22,
                             ),
                           ),
@@ -152,7 +152,7 @@ class MovieCart extends StatelessWidget {
                   child: Text(
                     '⭐ ${movie.voteAverage.toStringAsFixed(1)}',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.secondary,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -169,7 +169,7 @@ class MovieCart extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.secondary,
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                     height: 1.2,

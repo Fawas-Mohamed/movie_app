@@ -11,17 +11,17 @@ class SettingsPage extends StatelessWidget {
     required IconData icon,
     required String title,
     String? subtitle,
-    Color iconColor = Colors.white,
-    Color textColor = Colors.white,
+    Color iconColor = AppColors.secondary,
+    Color textColor = AppColors.secondary,
     VoidCallback? onTap,
     Widget? trailing,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
+        color: AppColors.secondary.withOpacity(0.06),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.06)),
+        border: Border.all(color: AppColors.secondary.withOpacity(0.06)),
       ),
       child: ListTile(
         leading: Icon(icon, color: iconColor),
@@ -53,7 +53,7 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1A1A1A),
-        title: Text(title, style: const TextStyle(color: Colors.white)),
+        title: Text(title, style: const TextStyle(color: AppColors.secondary)),
         content: Text(content, style: const TextStyle(color: Colors.white70)),
         actions: [
           TextButton(
@@ -73,7 +73,7 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text("Logout", style: TextStyle(color: Colors.white)),
+        title: const Text("Logout", style: TextStyle(color: AppColors.secondary)),
         content: const Text(
           "Are you sure you want to logout?",
           style: TextStyle(color: Colors.white70),
@@ -105,7 +105,7 @@ class SettingsPage extends StatelessWidget {
         backgroundColor: const Color(0xFF1A1A1A),
         title: const Text(
           "Clear Search History",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppColors.secondary),
         ),
         content: const Text(
           "This feature can be connected later when you save search history.",

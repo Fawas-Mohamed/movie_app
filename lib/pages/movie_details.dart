@@ -71,7 +71,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
               return ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isFav ? Colors.red : Colors.white12,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.secondary,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 onPressed: () async {
@@ -101,7 +101,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   backgroundColor: isSaved ? AppColors.primary : Colors.white12,
                   foregroundColor: isSaved
                       ? AppColors.background
-                      : Colors.white,
+                      : AppColors.secondary,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 onPressed: () async {
@@ -137,7 +137,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Text(
             "Cast not available",
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color:Colors.white70),
           );
         }
 
@@ -168,7 +168,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                       child: imageUrl.isEmpty
                           ? const Icon(
                               Icons.person,
-                              color: Colors.white,
+                              color: AppColors.secondary,
                               size: 30,
                             )
                           : null,
@@ -180,7 +180,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.secondary,
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                       ),
@@ -289,7 +289,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: AppColors.secondary,
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
@@ -324,7 +324,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   const Text(
                     "Overview",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.secondary,
                       fontSize: 21,
                       fontWeight: FontWeight.bold,
                     ),
@@ -346,7 +346,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   const Text(
                     "Cast",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.secondary,
                       fontSize: 21,
                       fontWeight: FontWeight.bold,
                     ),
@@ -358,7 +358,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   const Text(
                     "Similar Movies",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.secondary,
                       fontSize: 21,
                       fontWeight: FontWeight.bold,
                     ),

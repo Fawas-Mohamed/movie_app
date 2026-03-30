@@ -20,7 +20,7 @@ class ProfileStatCard extends StatelessWidget {
       padding: const EdgeInsets.all(15),
 
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+        color: AppColors.secondary.withOpacity(0.15),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white24),
       ),
@@ -34,7 +34,7 @@ class ProfileStatCard extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.secondary,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),

@@ -25,7 +25,7 @@ class ProfileHeader extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
+              color: AppColors.secondary.withOpacity(0.15),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.white24),
             ),
@@ -55,7 +55,7 @@ class ProfileHeader extends StatelessWidget {
                 Text(
                   username,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.secondary,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -66,12 +66,12 @@ class ProfileHeader extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.email, size: 16, color: Colors.white70),
+                    const Icon(Icons.email, size: 16, color: AppColors.secondary),
                     const SizedBox(width: 6),
                     Text(
                       email,
                       style: const TextStyle(
-                        color: Colors.white70,
+                        color: AppColors.secondary,
                         fontSize: 16,
                       ),
                     ),

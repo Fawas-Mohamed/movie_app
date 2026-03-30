@@ -63,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: TextField(
         controller: controller,
         obscureText: obscure,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColors.secondary),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: const TextStyle(color: Colors.white60),
@@ -104,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppColors.secondary,
                     ),
                   ),
 

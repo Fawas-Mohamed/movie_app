@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.secondary,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
       return const Padding(
         padding: EdgeInsets.all(20),
         child: Center(
-          child: Text("No Movies Found", style: TextStyle(color: Colors.white)),
+          child: Text("No Movies Found", style: TextStyle(color: AppColors.secondary)),
         ),
       );
     }
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
       child: Text(
         title,
         style: const TextStyle(
-          color: Colors.white,
+          color: AppColors.secondary,
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
@@ -221,7 +221,7 @@ class _HomePageState extends State<HomePage> {
                 "Welcome",
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white,
+                  color: AppColors.secondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -252,17 +252,17 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text("Home", style: TextStyle(color: Colors.white)),
+              leading: const Icon(Icons.home, color: AppColors.secondary),
+              title: const Text("Home", style: TextStyle(color: AppColors.secondary)),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.favorite, color: Colors.white),
+              leading: const Icon(Icons.favorite, color: AppColors.secondary),
               title: const Text(
                 "Favorites",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.secondary),
               ),
               onTap: () {
                 Navigator.push(
@@ -272,10 +272,10 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings, color: Colors.white),
+              leading: const Icon(Icons.settings, color: AppColors.secondary),
               title: const Text(
                 "Settings",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.secondary),
               ),
               onTap: () {
                 Navigator.push(
@@ -355,13 +355,13 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(16),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: AppColors.secondary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(25),
-                      border: Border.all(color: Colors.white.withOpacity(0.2)),
+                      border: Border.all(color: AppColors.secondary.withOpacity(0.2)),
                     ),
                     child: TextField(
                       controller: _searchController,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: AppColors.secondary),
                       onChanged: onSearchChanged,
                       onSubmitted: (_) => FocusScope.of(context).unfocus(),
                       decoration: InputDecoration(
@@ -369,13 +369,13 @@ class _HomePageState extends State<HomePage> {
                         hintStyle: const TextStyle(color: Colors.white70),
                         prefixIcon: const Icon(
                           Icons.search,
-                          color: Colors.white,
+                          color: AppColors.secondary,
                         ),
                         suffixIcon: _searchController.text.isNotEmpty
                             ? IconButton(
                                 icon: const Icon(
                                   Icons.close,
-                                  color: Colors.white,
+                                  color: AppColors.secondary,
                                 ),
                                 onPressed: () {
                                   _searchController.clear();

@@ -76,7 +76,7 @@ class WatchlistPage extends StatelessWidget {
                       return const Center(
                         child: Text(
                           "Something went wrong",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.secondary),
                         ),
                       );
                     }
@@ -87,7 +87,7 @@ class WatchlistPage extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(horizontal: 24),
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.08),
+                            color: AppColors.secondary.withOpacity(0.08),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: const Column(
@@ -102,7 +102,7 @@ class WatchlistPage extends StatelessWidget {
                               Text(
                                 "No Movies in Watchlist Yet",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.secondary,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -112,7 +112,7 @@ class WatchlistPage extends StatelessWidget {
                                 "Add movies from the details page.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.white70,
+                                  color: AppColors.secondary,
                                   fontSize: 13,
                                 ),
                               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
@@ -47,7 +48,7 @@ class RecentlyViewedSection extends StatelessWidget {
             child: Center(
               child: Text(
                 "No recently viewed movies yet",
-                style: TextStyle(color: Colors.white70),
+                style: TextStyle(color: AppColors.secondary),
               ),
             ),
           );
@@ -65,7 +66,7 @@ class RecentlyViewedSection extends StatelessWidget {
               child: Text(
                 'Recently Viewed',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.secondary,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

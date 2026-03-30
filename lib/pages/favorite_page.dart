@@ -79,7 +79,7 @@ class FavoritePage extends StatelessWidget {
                       return const Center(
                         child: Text(
                           "No Favorite Movies Yet",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(color: AppColors.secondary, fontSize: 16),
                         ),
                       );
                     }

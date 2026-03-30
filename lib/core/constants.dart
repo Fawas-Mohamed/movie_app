@@ -9,4 +9,5 @@ class AppConstants{
 class AppColors {
   static const primary = Color.fromARGB(255, 242, 255, 57);
   static const background = Colors.black;
+  static const secondary = Colors.white;
 }

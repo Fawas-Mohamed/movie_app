@@ -52,10 +52,10 @@ class _SigninPageState extends State<SigninPage> {
       child: TextField(
         controller: controller,
         obscureText: obscure,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColors.secondary),
         decoration: InputDecoration(
           hintText: hint,
-          hintStyle: const TextStyle(color: Colors.white60),
+          hintStyle: const TextStyle(color: AppColors.secondary),
           filled: true,
           fillColor: Colors.grey[900],
           border: OutlineInputBorder(
@@ -93,7 +93,7 @@ class _SigninPageState extends State<SigninPage> {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppColors.secondary,
                     ),
                   ),
 

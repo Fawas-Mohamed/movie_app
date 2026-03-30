@@ -129,7 +129,7 @@ class _AboutPageState extends State<AboutPage>
                         Container(
                           padding: const EdgeInsets.all(18),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.05),
+                            color: AppColors.secondary.withOpacity(0.05),
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(color: Colors.white12),
                           ),
@@ -250,7 +250,7 @@ class _AboutPageState extends State<AboutPage>
         Text(
           value,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.secondary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -265,16 +265,16 @@ class _AboutPageState extends State<AboutPage>
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.08),
+          color: AppColors.secondary.withOpacity(0.08),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.white12),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: Colors.white, size: 18),
+            Icon(icon, color: AppColors.secondary, size: 18),
             const SizedBox(width: 6),
-            Text(text, style: const TextStyle(color: Colors.white)),
+            Text(text, style: const TextStyle(color: AppColors.secondary)),
           ],
         ),
       ),
