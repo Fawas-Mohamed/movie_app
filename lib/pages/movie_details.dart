@@ -23,10 +23,11 @@ class MovieDetailsPage extends StatefulWidget {
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
   @override
-void initState() {
-  super.initState();
-  RecentlyViewedService.saveRecentlyViewed(widget.movie);
-}
+  void initState() {
+    super.initState();
+    RecentlyViewedService.saveRecentlyViewed(widget.movie);
+  }
+
   bool isTrailerLoading = false;
 
   Future<void> playTrailer() async {
@@ -41,14 +42,14 @@ void initState() {
         final uri = Uri.parse("https://www.youtube.com/watch?v=$key");
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Trailer not available")),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Trailer not available")));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Something went wrong")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Something went wrong")));
     } finally {
       if (mounted) {
         setState(() {
@@ -82,9 +83,7 @@ void initState() {
                     await FavoriteService.addFavorite(widget.movie);
                   }
                 },
-                icon: Icon(
-                  isFav ? Icons.favorite : Icons.favorite_border,
-                ),
+                icon: Icon(isFav ? Icons.favorite : Icons.favorite_border),
                 label: Text(isFav ? "Favorited" : "Favorite"),
               );
             },
@@ -99,8 +98,9 @@ void initState() {
 
               return ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      isSaved ? const Color.fromARGB(255, 242, 255, 57) : Colors.white12,
+                  backgroundColor: isSaved
+                      ? const Color.fromARGB(255, 242, 255, 57)
+                      : Colors.white12,
                   foregroundColor: isSaved ? Colors.black : Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
@@ -113,9 +113,7 @@ void initState() {
                     await WatchlistService.saveWatchlist(widget.movie);
                   }
                 },
-                icon: Icon(
-                  isSaved ? Icons.bookmark : Icons.bookmark_border,
-                ),
+                icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_border),
                 label: Text(isSaved ? "Saved" : "Watchlist"),
               );
             },
@@ -164,10 +162,15 @@ void initState() {
                     CircleAvatar(
                       radius: 38,
                       backgroundColor: Colors.white12,
-                      backgroundImage:
-                          imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
+                      backgroundImage: imageUrl.isNotEmpty
+                          ? NetworkImage(imageUrl)
+                          : null,
                       child: imageUrl.isEmpty
-                          ? const Icon(Icons.person, color: Colors.white, size: 30)
+                          ? const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 30,
+                            )
                           : null,
                     ),
                     const SizedBox(height: 8),
@@ -207,7 +210,7 @@ void initState() {
   Widget build(BuildContext context) {
     final heroImage = widget.movie.backdropPath.isNotEmpty
         ? "${AppConstants.baseImageUrl}/${widget.movie.posterPath}"
-        :"${AppConstants.baseImageUrl}/${widget.movie.backdropPath}" ;
+        : "${AppConstants.baseImageUrl}/${widget.movie.backdropPath}";
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -226,7 +229,11 @@ void initState() {
                     color: const Color.fromARGB(255, 242, 255, 57),
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 18),
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 18,
+                  ),
                 ),
               ),
             ),
@@ -234,10 +241,7 @@ void initState() {
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.network(
-                    heroImage,
-                    fit: BoxFit.cover,
-                  ),
+                  Image.network(heroImage, fit: BoxFit.cover),
                   Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -314,10 +318,7 @@ void initState() {
                   ),
                   Text(
                     "${widget.movie.voteAverage.toStringAsFixed(1)}/10  •  ${widget.movie.originalLanguage.toUpperCase()}  •  ${widget.movie.releaseDate.year}",
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
+                    style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                   const SizedBox(height: 18),
                   buildActionButtons(),
@@ -358,30 +359,22 @@ void initState() {
                   const SizedBox(height: 20),
 
                   const Text(
-  "Similar Movies",
-  style: TextStyle(
-    color: Colors.white,
-    fontSize: 21,
-    fontWeight: FontWeight.bold,
-  ),
-),
-const SizedBox(height: 12),
+                    "Similar Movies",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 21,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
 
-SimilarMoviesSection(movieId: widget.movie.id),
+                  SimilarMoviesSection(movieId: widget.movie.id),
 
-const SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   const SizedBox(height: 12),
                 ],
               ),
             ),
-          ),
-
-          const SliverToBoxAdapter(
-            child: MovieList(type: 'upcoming'),
-          ),
-
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 24),
           ),
         ],
       ),

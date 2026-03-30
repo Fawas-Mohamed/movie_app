@@ -29,17 +29,6 @@ class SimilarMoviesSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(15),
-              child: Text(
-                "Similar Movies",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 21,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             SizedBox(
               height: 280,
               child: ListView.builder(
