@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/controller/tab_controller.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/about_page.dart';
 import 'package:movieapp/pages/setting_page.dart';
 import 'package:movieapp/pages/signin_page.dart';
@@ -19,7 +20,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: AppBackground(
         child: SafeArea(
           child: SingleChildScrollView(
@@ -40,7 +41,7 @@ class ProfilePage extends StatelessWidget {
                             child: Text(
                               "Profile",
                               style: TextStyle(
-                                color: Color.fromARGB(255, 242, 255, 57),
+                                color: AppColors.primary,
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
                               ),

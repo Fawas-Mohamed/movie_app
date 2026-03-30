@@ -97,10 +97,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
               return ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isSaved
-                      ? const Color.fromARGB(255, 242, 255, 57)
-                      : Colors.white12,
-                  foregroundColor: isSaved ? Colors.black : Colors.white,
+                  backgroundColor: isSaved ? AppColors.primary : Colors.white12,
+                  foregroundColor: isSaved
+                      ? AppColors.background
+                      : Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 onPressed: () async {
@@ -212,11 +212,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         : "${AppConstants.baseImageUrl}/${widget.movie.backdropPath}";
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: AppColors.background,
             expandedHeight: 320,
             pinned: true,
             leading: Padding(
@@ -225,12 +225,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 onTap: () => Navigator.pop(context),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 242, 255, 57),
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Icon(
                     Icons.arrow_back,
-                    color: Colors.black,
+                    color: AppColors.background,
                     size: 18,
                   ),
                 ),
@@ -247,9 +247,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.black.withOpacity(0.25),
-                          Colors.black.withOpacity(0.65),
-                          Colors.black,
+                          AppColors.background.withOpacity(0.25),
+                          AppColors.background.withOpacity(0.65),
+                          AppColors.background,
                         ],
                       ),
                     ),
@@ -266,20 +266,20 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             width: 70,
                             height: 70,
                             decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 242, 255, 57),
+                              color: AppColors.primary,
                               shape: BoxShape.circle,
                             ),
                             child: isTrailerLoading
                                 ? const Padding(
                                     padding: EdgeInsets.all(18),
                                     child: CircularProgressIndicator(
-                                      color: Colors.black,
+                                      color: AppColors.background,
                                       strokeWidth: 3,
                                     ),
                                   )
                                 : const Icon(
                                     Icons.play_arrow,
-                                    color: Colors.black,
+                                    color: AppColors.background,
                                     size: 40,
                                   ),
                           ),

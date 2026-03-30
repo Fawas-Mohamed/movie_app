@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/widgets/app_background.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
@@ -50,7 +51,7 @@ class _AboutPageState extends State<AboutPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: AppBackground(
         child: SafeArea(
           child: FadeTransition(
@@ -67,12 +68,12 @@ class _AboutPageState extends State<AboutPage>
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 242, 255, 57),
+                            color:AppColors.primary,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Icon(
                             Icons.arrow_back,
-                            color: Colors.black,
+                            color: AppColors.background,
                             size: 20,
                           ),
                         ),
@@ -82,7 +83,7 @@ class _AboutPageState extends State<AboutPage>
                           child: Text(
                             "About Us",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 242, 255, 57),
+                              color: AppColors.primary,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -110,7 +111,7 @@ class _AboutPageState extends State<AboutPage>
                         const Text(
                           "PopcornPal",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 242, 255, 57),
+                            color: AppColors.primary,
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
@@ -189,8 +190,8 @@ class _AboutPageState extends State<AboutPage>
 
                         ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 242, 255, 57),
-                            foregroundColor: Colors.black,
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: AppColors.background,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 24,
                               vertical: 12,

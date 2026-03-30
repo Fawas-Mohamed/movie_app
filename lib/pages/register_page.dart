@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/signin_page.dart';
 
@@ -79,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
 
       body: SafeArea(
         child: Center(
@@ -91,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   const Icon(
                     Icons.movie,
-                    color: Color.fromARGB(255, 242, 255, 57),
+                    color: AppColors.primary,
                     size: 80,
                   ),
 
@@ -130,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 242, 255, 57),
+                        backgroundColor: AppColors.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -139,11 +140,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: isLoading ? null : signUpUser,
 
                       child: isLoading
-                          ? const CircularProgressIndicator(color: Colors.black)
+                          ? const CircularProgressIndicator(color: AppColors.background)
                           : const Text(
                               "Register",
                               style: TextStyle(
-                                color: Colors.black,
+                                color: AppColors.background,
                                 fontSize: 18,
                               ),
                             ),

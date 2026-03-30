@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/widgets/app_background.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
@@ -14,12 +15,11 @@ class FavoritePage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: AppBackground(
         child: SafeArea(
           child: Column(
             children: [
-              /// TOP BAR
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
@@ -32,17 +32,17 @@ class FavoritePage extends StatelessWidget {
                     const Text(
                       "Favorite Movies",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 242, 255, 57),
+                        color: AppColors.primary,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     CircleAvatar(
                       radius: 18,
-                      backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                      backgroundColor: AppColors.primary,
                       child: Text(
                         user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                        style: const TextStyle(color: Colors.black),
+                        style: const TextStyle(color: AppColors.background),
                       ),
                     ),
                   ],
@@ -53,7 +53,7 @@ class FavoritePage extends StatelessWidget {
                   const Text(
                     " You Can Add Your Favorite Movies Here ❤️",
                     style: TextStyle(
-                      color: Color.fromARGB(255, 242, 255, 57),
+                      color: AppColors.primary,
                       fontSize: 12,
                     ),
                   ),

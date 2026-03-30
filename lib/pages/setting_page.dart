@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/widgets/app_background.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -59,7 +60,7 @@ class SettingsPage extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text(
               "OK",
-              style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
+              style: TextStyle(color: AppColors.primary),
             ),
           ),
         ],
@@ -115,7 +116,7 @@ class SettingsPage extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text(
               "OK",
-              style: TextStyle(color: Color.fromARGB(255, 242, 255, 57)),
+              style: TextStyle(color: AppColors.primary),
             ),
           ),
         ],
@@ -128,7 +129,7 @@ class SettingsPage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: AppBackground(
         child: SafeArea(
           child: Column(
@@ -143,12 +144,12 @@ class SettingsPage extends StatelessWidget {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 242, 255, 57),
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(
                           Icons.arrow_back,
-                          color: Colors.black,
+                          color: AppColors.background,
                           size: 20,
                         ),
                       ),
@@ -158,7 +159,7 @@ class SettingsPage extends StatelessWidget {
                         child: Text(
                           "Settings",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 242, 255, 57),
+                            color: AppColors.primary,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -167,11 +168,11 @@ class SettingsPage extends StatelessWidget {
                     ),
                     CircleAvatar(
                       radius: 18,
-                      backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                      backgroundColor: AppColors.primary,
                       child: Text(
                         user?.email?.substring(0, 1).toUpperCase() ?? "U",
                         style: const TextStyle(
-                          color: Colors.black,
+                          color: AppColors.background,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/auth_page.dart';
 import 'package:movieapp/widgets/app_background.dart';
 
@@ -53,7 +54,7 @@ class _SplashPageState extends State<SplashPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: AppBackground(
         child: Center(
           child: FadeTransition(
@@ -67,7 +68,7 @@ class _SplashPageState extends State<SplashPage>
                     width: 95,
                     height: 95,
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 242, 255, 57),
+                      color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset('assets/app_icon.png'),
@@ -76,7 +77,7 @@ class _SplashPageState extends State<SplashPage>
                   const Text(
                     "PopcornPals",
                     style: TextStyle(
-                      color: Color.fromARGB(255, 242, 255, 57),
+                      color: AppColors.primary,
                       fontSize: 32,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1,
@@ -97,7 +98,7 @@ class _SplashPageState extends State<SplashPage>
                     height: 28,
                     child: CircularProgressIndicator(
                       strokeWidth: 3,
-                      color: Color.fromARGB(255, 242, 255, 57),
+                      color: AppColors.primary,
                     ),
                   ),
                 ],

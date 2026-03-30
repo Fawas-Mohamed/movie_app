@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/widgets/app_background.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
@@ -14,7 +15,7 @@ class WatchlistPage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: AppBackground(
         child: SafeArea(
           child: Column(
@@ -28,24 +29,24 @@ class WatchlistPage extends StatelessWidget {
                       width: 40,
                       child: Icon(
                         Icons.bookmark,
-                        color: Color.fromARGB(255, 242, 255, 57),
+                        color: AppColors.primary,
                       ),
                     ),
                     const Text(
                       "My Watchlist",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 242, 255, 57),
+                        color: AppColors.primary,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     CircleAvatar(
                       radius: 18,
-                      backgroundColor: const Color.fromARGB(255, 242, 255, 57),
+                      backgroundColor: AppColors.primary,
                       child: Text(
                         user?.email?.substring(0, 1).toUpperCase() ?? "U",
                         style: const TextStyle(
-                          color: Colors.black,
+                          color: AppColors.background,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -67,7 +68,7 @@ class WatchlistPage extends StatelessWidget {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(
-                          color: Color.fromARGB(255, 242, 255, 57),
+                          color: AppColors.primary,
                         ),
                       );
                     }
@@ -95,7 +96,7 @@ class WatchlistPage extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.bookmark_border,
-                                color: Color.fromARGB(255, 242, 255, 57),
+                                color: AppColors.primary,
                                 size: 48,
                               ),
                               SizedBox(height: 12),

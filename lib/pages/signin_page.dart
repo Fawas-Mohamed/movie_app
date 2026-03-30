@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/register_page.dart';
 import 'package:movieapp/pages/main_navigation.dart';
 
@@ -68,7 +69,7 @@ class _SigninPageState extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
 
       body: SafeArea(
         child: Center(
@@ -80,7 +81,7 @@ class _SigninPageState extends State<SigninPage> {
                 children: [
                   const Icon(
                     Icons.movie,
-                    color: Color.fromARGB(255, 242, 255, 57),
+                    color: AppColors.primary,
                     size: 80,
                   ),
 
@@ -112,18 +113,18 @@ class _SigninPageState extends State<SigninPage> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 242, 255, 57),
+                        backgroundColor: AppColors.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: isLoading ? null : signInUser,
                       child: isLoading
-                          ? const CircularProgressIndicator(color: Colors.black)
+                          ? const CircularProgressIndicator(color: AppColors.background)
                           : const Text(
                               "Sign In",
                               style: TextStyle(
-                                color: Colors.black,
+                                color: AppColors.background,
                                 fontSize: 18,
                               ),
                             ),

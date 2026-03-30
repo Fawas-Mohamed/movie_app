@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/controller/tab_controller.dart';
+import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/pages/home_page.dart';
 import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/pages/profile_page.dart';
@@ -22,10 +23,9 @@ class MainNavigation extends StatelessWidget {
       valueListenable: TabControllerNotifier.currentIndex,
       builder: (context, currentIndex, _) {
         return Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: AppColors.background,
           body: Stack(
             children: [
-              /// Pages
               Positioned.fill(
                 child: IndexedStack(index: currentIndex, children: pages),
               ),
