@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:movieapp/pages/splash_page.dart';
 

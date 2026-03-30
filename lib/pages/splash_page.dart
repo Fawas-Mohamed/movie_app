@@ -96,11 +96,8 @@ class _SplashPageState extends State<SplashPage>
                         color: Color.fromARGB(255, 242, 255, 57),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
-                        Icons.movie_creation_outlined,
-                        color: Colors.black,
-                        size: 48,
-                      ),
+                      child:Image.asset('assets/app_icon.png'),
+                     
                     ),
                     const SizedBox(height: 20),
                     const Text(

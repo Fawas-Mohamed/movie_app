@@ -6,7 +6,6 @@ import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/services/favorite_service.dart';
 import 'package:movieapp/services/watchlist_service.dart';
-import 'package:movieapp/widgets/movie-list.dart';
 import 'package:movieapp/widgets/similar_movies_section.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movieapp/services/cast_service.dart';
