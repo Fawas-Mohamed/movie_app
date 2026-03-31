@@ -3,19 +3,30 @@ import 'package:movieapp/core/constants.dart';
 
 class UserAvatar extends StatelessWidget {
   final String? email;
+  final double radius;
+
   const UserAvatar({
     super.key,
-    this.email
-    });
+    this.email,
+    this.radius = 18,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final String initial = (email != null && email!.isNotEmpty)
+        ? email![0].toUpperCase()
+        : "U";
+
     return CircleAvatar(
-      radius: 18,
+      radius: radius,
       backgroundColor: AppColors.primary,
       child: Text(
-        email?.substring(0,1).toUpperCase() ?? "U",
-        style: const TextStyle(color: AppColors.background,fontWeight: FontWeight.bold),
+        initial,
+        style: TextStyle(
+          color: AppColors.background,
+          fontWeight: FontWeight.bold,
+          fontSize: radius * 0.9, 
+        ),
       ),
     );
   }

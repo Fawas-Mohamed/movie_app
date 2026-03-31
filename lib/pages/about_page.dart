@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/widgets/app_background.dart';
 import 'package:movieapp/widgets/app_header.dart';
+import 'package:movieapp/widgets/back_button.dart';
 import 'package:movieapp/widgets/info_row.dart';
 import 'package:movieapp/widgets/section_title.dart';
 import 'package:movieapp/widgets/social_button.dart';
@@ -62,7 +63,7 @@ class _AboutPageState extends State<AboutPage>
             opacity: _fadeAnimation,
             child: Column(
               children: [
-                AppHeader(leftWidget: BackButton(), title: "About Us"),
+                AppHeader(leftWidget: AppBackButton(), title: "About Us"),
 
                 const SizedBox(height: 10),
 

@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/widgets/app_background.dart';
 import 'package:movieapp/widgets/app_header.dart';
+import 'package:movieapp/widgets/back_button.dart';
 import 'package:movieapp/widgets/user_avatar.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -135,7 +135,7 @@ class SettingsPage extends StatelessWidget {
           child: Column(
             children: [
               AppHeader(
-                leftWidget: BackButton(),
+                leftWidget: AppBackButton(),
                 title: "Settings",
                 rightWidget: UserAvatar(email: user?.email),
               ),
