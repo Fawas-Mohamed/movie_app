@@ -28,37 +28,6 @@ class WatchlistPage extends StatelessWidget {
                 title: "My Watchlist",
                 rightWidget: UserAvatar(email: user?.email),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(
-                      width: 40,
-                      child: Icon(Icons.bookmark, color: AppColors.primary),
-                    ),
-                    const Text(
-                      "My Watchlist",
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: AppColors.primary,
-                      child: Text(
-                        user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                        style: const TextStyle(
-                          color: AppColors.background,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
 
               const SizedBox(height: 14),
 

@@ -7,7 +7,6 @@ import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/services/favorite_service.dart';
 import 'package:movieapp/services/watchlist_service.dart';
 import 'package:movieapp/widgets/app_loader.dart';
-import 'package:movieapp/widgets/back_button.dart';
 import 'package:movieapp/widgets/similar_movies_section.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:movieapp/services/cast_service.dart';
@@ -221,7 +220,23 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             backgroundColor: AppColors.background,
             expandedHeight: 320,
             pinned: true,
-            leading: AppBackButton(),
+            leading: Padding(
+              padding: const EdgeInsets.all(8),
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.background,
+                    size: 18,
+                  ),
+                ),
+              ),
+            ),
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
                 fit: StackFit.expand,

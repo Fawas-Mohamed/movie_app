@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -8,6 +8,7 @@ import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/pages/favorite_page.dart';
 import 'package:movieapp/pages/profile_page.dart';
 import 'package:movieapp/pages/setting_page.dart';
+import 'package:movieapp/pages/watchlist-page.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/app_background.dart';
 import 'package:movieapp/widgets/app_header.dart';
@@ -29,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
 
   Timer? _debounce;
+  int _searchId = 0;
 
   List<MovieModel> searchResults = [];
   List<MovieModel> bannerMovies = [];
@@ -40,10 +42,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     loadBannerMovies();
-
-    _searchController.addListener(() {
-      setState(() {});
-    });
   }
 
   Future<void> loadBannerMovies() async {
@@ -57,8 +55,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onSearchChanged(String query) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _searchId++;
+    final currentId = _searchId;
 
+    _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       query = query.trim();
 
@@ -78,7 +78,8 @@ class _HomePageState extends State<HomePage> {
 
       final results = await ApiService.searchMovies(query);
 
-      if (!mounted) return;
+      if (!mounted || currentId != _searchId) return;
+
       setState(() {
         searchResults = results;
         isLoading = false;
@@ -98,65 +99,59 @@ class _HomePageState extends State<HomePage> {
       return const SizedBox(height: 160, child: Center(child: AppLoader()));
     }
 
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 160,
-        autoPlay: true,
-        enlargeCenterPage: true,
-        viewportFraction: 0.9,
-      ),
-      items: bannerMovies.map((movie) {
-        return Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
-                width: double.infinity,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: AppColors.background,
-                    alignment: Alignment.center,
-                    child: const Icon(
-                      Icons.broken_image,
-                      color: Colors.white54,
+    return RepaintBoundary(
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: 160,
+          autoPlay: true,
+          enlargeCenterPage: true,
+          viewportFraction: 0.9,
+        ),
+        items: bannerMovies.map((movie) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Stack(
+              children: [
+                CachedNetworkImage(
+                  imageUrl:
+                      "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  placeholder: (_, __) => const AppLoader(),
+                  errorWidget: (_, __, ___) =>
+                      const Icon(Icons.broken_image, color: Colors.white),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        AppColors.background.withOpacity(0.8),
+                        Colors.transparent,
+                      ],
                     ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    AppColors.background.withOpacity(0.8),
-                    Colors.transparent,
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              bottom: 10,
-              left: 10,
-              right: 10,
-              child: Text(
-                movie.title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: AppColors.secondary,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                Positioned(
+                  bottom: 10,
+                  left: 10,
+                  right: 10,
+                  child: Text(
+                    movie.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: AppColors.secondary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -180,19 +175,24 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Wrap(
-        spacing: 4,
-        runSpacing: 4,
-        children: searchResults
-            .map((movie) => MovieCart(movie: movie))
-            .toList(),
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: searchResults.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: 0.6,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 10,
       ),
+      itemBuilder: (context, index) {
+        return MovieCart(movie: searchResults[index]);
+      },
     );
   }
 
-  Widget buildSectionTitle(String title) {
+  Widget sectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Text(
@@ -210,88 +210,60 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        width: 220,
         backgroundColor: AppColors.background,
         child: ListView(
-          padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              currentAccountPictureSize: const Size(50, 50),
               decoration: const BoxDecoration(color: AppColors.background),
               accountName: const Text(
                 "Welcome",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.secondary,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: AppColors.secondary),
               ),
-              accountEmail: Text(
-                user?.email ?? "user@email.com",
-                style: const TextStyle(color: Colors.grey),
-              ),
+              accountEmail: Text(user?.email ?? ""),
               currentAccountPicture: GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfilePage(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const ProfilePage()),
                   );
                 },
-                child: CircleAvatar(
-                  backgroundColor: AppColors.primary,
-                  child: Text(
-                    user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.background,
-                    ),
-                  ),
-                ),
+                child: UserAvatar(email: user?.email, radius: 25),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home, color: AppColors.secondary),
-              title: const Text(
-                "Home",
-                style: TextStyle(color: AppColors.secondary),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
             ),
             ListTile(
               leading: const Icon(Icons.favorite, color: AppColors.secondary),
-              title: const Text(
-                "Favorites",
-                style: TextStyle(color: AppColors.secondary),
+              title: const Text("Favorites",
+                  style: TextStyle(color: AppColors.secondary)),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FavoritePage()),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FavoritePage()),
-                );
-              },
             ),
             ListTile(
               leading: const Icon(Icons.settings, color: AppColors.secondary),
-              title: const Text(
-                "Settings",
-                style: TextStyle(color: AppColors.secondary),
+              title: const Text("Watchlist",
+                  style: TextStyle(color: AppColors.secondary)),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const WatchlistPage()),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SettingsPage()),
-                );
-              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings, color: AppColors.secondary),
+              title: const Text("Settings",
+                  style: TextStyle(color: AppColors.secondary)),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SettingsPage()),
+              ),
             ),
             const Divider(color: Colors.grey),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text("Logout", style: TextStyle(color: Colors.red)),
+              title: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.red),
+              ),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
               },
@@ -299,116 +271,99 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+
       body: AppBackground(
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 15),
-
-                AppHeader(
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: AppHeader(
                   title: "PopcornPals",
-                  leftWidget: IconButton(
-                    icon: const Icon(Icons.read_more, color: AppColors.primary),
-                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  leftWidget: Builder(
+                    builder: (context) => IconButton(
+                      icon: const Icon(Icons.menu,
+                          color: AppColors.primary),
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                    ),
                   ),
                   rightWidget: UserAvatar(email: user?.email),
                 ),
+              ),
 
-                const Center(
+              const SliverToBoxAdapter(
+                child: Center(
                   child: Text(
                     "Discover Your Movies",
-                    style: TextStyle(color: AppColors.primary, fontSize: 12),
+                    style: TextStyle(color: AppColors.primary,fontSize: 12,),
                   ),
                 ),
+              ),
 
-                const SizedBox(height: 20),
-
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.secondary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(
-                        color: AppColors.secondary.withOpacity(0.2),
-                      ),
-                    ),
-                    child: TextField(
-                      controller: _searchController,
-                      style: const TextStyle(color: AppColors.secondary),
-                      onChanged: onSearchChanged,
-                      onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                      decoration: InputDecoration(
-                        hintText: "Search movies...",
-                        hintStyle: const TextStyle(color: Colors.white70),
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: AppColors.secondary,
+              SliverToBoxAdapter(
+                child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(25),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.2),
                         ),
-                        suffixIcon: _searchController.text.isNotEmpty
-                            ? IconButton(
-                                icon: const Icon(
-                                  Icons.close,
-                                  color: AppColors.secondary,
-                                ),
-                                onPressed: () {
-                                  _searchController.clear();
-                                  setState(() {
-                                    isSearching = false;
-                                    searchResults = [];
-                                  });
-                                },
-                              )
-                            : null,
-                        border: InputBorder.none,
+                      ),
+                      child: TextField(
+                        controller: _searchController,
+                        style: const TextStyle(color: Colors.white),
+                        onChanged: onSearchChanged,
+                        onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                        decoration: InputDecoration(
+                          hintText: "Search movies...",
+                          hintStyle: const TextStyle(color: Colors.white70),
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.white,
+                          ),
+                          suffixIcon: _searchController.text.isNotEmpty
+                              ? IconButton(
+                                  icon: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    _searchController.clear();
+                                    setState(() {
+                                      isSearching = false;
+                                      searchResults = [];
+                                    });
+                                  },
+                                )
+                              : null,
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
-                ),
+              ),
 
-                if (!isSearching) bannerSlider(),
+              if (!isSearching)
+                SliverToBoxAdapter(child: bannerSlider()),
 
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  transitionBuilder: (child, animation) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(0, 0.05),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child,
-                      ),
-                    );
-                  },
-                  child: isSearching
-                      ? SizedBox(
-                          key: const ValueKey('search'),
-                          child: buildSearchResults(),
-                        )
-                      : const SizedBox(),
-                ),
+              if (isSearching)
+                SliverToBoxAdapter(child: buildSearchResults()),
+              if (!isSearching)
+                SliverToBoxAdapter(child: RecentlyViewedSection()),
 
-                if (!isSearching) const RecentlyViewedSection(),
+              if (!isSearching) ...[
+                
+                SliverToBoxAdapter(child: sectionTitle("Popular Movies")),
+                const SliverToBoxAdapter(child: MovieList(type: "popular")),
 
-                if (!isSearching) ...[
-                  buildSectionTitle('Popular Movies'),
-                  const MovieList(type: 'popular'),
+                SliverToBoxAdapter(child: sectionTitle("Top Rated")),
+                const SliverToBoxAdapter(child: MovieList(type: "top_rated")),
 
-                  buildSectionTitle('Top Rated'),
-                  const MovieList(type: 'top_rated'),
-
-                  buildSectionTitle('Upcoming'),
-                  const MovieList(type: 'upcoming'),
-
-                  buildSectionTitle('Now Playing'),
-                  const MovieList(type: 'now_playing'),
-                ],
+                SliverToBoxAdapter(child: sectionTitle("Upcoming")),
+                const SliverToBoxAdapter(child: MovieList(type: "upcoming")),
               ],
-            ),
+            ],
           ),
         ),
       ),
