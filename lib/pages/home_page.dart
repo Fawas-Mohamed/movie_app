@@ -28,6 +28,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   final user = FirebaseAuth.instance.currentUser;
+  final FocusNode _searchFocus = FocusNode();
 
   Timer? _debounce;
   int _searchId = 0;
@@ -42,6 +43,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     loadBannerMovies();
+    _searchController.addListener(() {
+      setState(() {});
+    });
   }
 
   Future<void> loadBannerMovies() async {
@@ -91,6 +95,7 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _debounce?.cancel();
     _searchController.dispose();
+    _searchFocus.dispose();
     super.dispose();
   }
 
@@ -232,8 +237,10 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.favorite, color: AppColors.secondary),
-              title: const Text("Favorites",
-                  style: TextStyle(color: AppColors.secondary)),
+              title: const Text(
+                "Favorites",
+                style: TextStyle(color: AppColors.secondary),
+              ),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const FavoritePage()),
@@ -241,8 +248,10 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.settings, color: AppColors.secondary),
-              title: const Text("Watchlist",
-                  style: TextStyle(color: AppColors.secondary)),
+              title: const Text(
+                "Watchlist",
+                style: TextStyle(color: AppColors.secondary),
+              ),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const WatchlistPage()),
@@ -250,8 +259,10 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.settings, color: AppColors.secondary),
-              title: const Text("Settings",
-                  style: TextStyle(color: AppColors.secondary)),
+              title: const Text(
+                "Settings",
+                style: TextStyle(color: AppColors.secondary),
+              ),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const SettingsPage()),
@@ -260,10 +271,7 @@ class _HomePageState extends State<HomePage> {
             const Divider(color: Colors.grey),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text(
-                "Logout",
-                style: TextStyle(color: Colors.red),
-              ),
+              title: const Text("Logout", style: TextStyle(color: Colors.red)),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
               },
@@ -272,47 +280,52 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body: AppBackground(
-        child: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: AppHeader(
-                  title: "PopcornPals",
-                  leftWidget: Builder(
-                    builder: (context) => IconButton(
-                      icon: const Icon(Icons.menu,
-                          color: AppColors.primary),
-                      onPressed: () => Scaffold.of(context).openDrawer(),
+      body: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: AppBackground(
+          child: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: AppHeader(
+                    title: "PopcornPals",
+                    leftWidget: Builder(
+                      builder: (context) => IconButton(
+                        icon: const Icon(Icons.menu, color: AppColors.primary),
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                      ),
+                    ),
+                    rightWidget: UserAvatar(email: user?.email),
+                  ),
+                ),
+
+                const SliverToBoxAdapter(
+                  child: Center(
+                    child: Text(
+                      "Discover Your Movies",
+                      style: TextStyle(color: AppColors.primary, fontSize: 12),
                     ),
                   ),
-                  rightWidget: UserAvatar(email: user?.email),
                 ),
-              ),
 
-              const SliverToBoxAdapter(
-                child: Center(
-                  child: Text(
-                    "Discover Your Movies",
-                    style: TextStyle(color: AppColors.primary,fontSize: 12,),
-                  ),
-                ),
-              ),
-
-              SliverToBoxAdapter(
-                child: Padding(
+                SliverToBoxAdapter(
+                  child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: AppColors.secondary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.2),
+                          color: AppColors.secondary.withOpacity(0.2),
                         ),
                       ),
                       child: TextField(
+                        focusNode: _searchFocus,
+                        autofocus: false, 
                         controller: _searchController,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: AppColors.secondary),
                         onChanged: onSearchChanged,
                         onSubmitted: (_) => FocusScope.of(context).unfocus(),
                         decoration: InputDecoration(
@@ -320,16 +333,17 @@ class _HomePageState extends State<HomePage> {
                           hintStyle: const TextStyle(color: Colors.white70),
                           prefixIcon: const Icon(
                             Icons.search,
-                            color: Colors.white,
+                            color: AppColors.secondary,
                           ),
                           suffixIcon: _searchController.text.isNotEmpty
                               ? IconButton(
                                   icon: const Icon(
                                     Icons.close,
-                                    color: Colors.white,
+                                    color: AppColors.secondary,
                                   ),
                                   onPressed: () {
                                     _searchController.clear();
+                                    FocusManager.instance.primaryFocus?.unfocus();
                                     setState(() {
                                       isSearching = false;
                                       searchResults = [];
@@ -342,28 +356,27 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-              ),
+                ),
 
-              if (!isSearching)
-                SliverToBoxAdapter(child: bannerSlider()),
+                if (!isSearching) SliverToBoxAdapter(child: bannerSlider()),
 
-              if (isSearching)
-                SliverToBoxAdapter(child: buildSearchResults()),
-              if (!isSearching)
-                SliverToBoxAdapter(child: RecentlyViewedSection()),
+                if (isSearching)
+                  SliverToBoxAdapter(child: buildSearchResults()),
+                if (!isSearching)
+                  SliverToBoxAdapter(child: RecentlyViewedSection()),
 
-              if (!isSearching) ...[
-                
-                SliverToBoxAdapter(child: sectionTitle("Popular Movies")),
-                const SliverToBoxAdapter(child: MovieList(type: "popular")),
+                if (!isSearching) ...[
+                  SliverToBoxAdapter(child: sectionTitle("Popular Movies")),
+                  const SliverToBoxAdapter(child: MovieList(type: "popular")),
 
-                SliverToBoxAdapter(child: sectionTitle("Top Rated")),
-                const SliverToBoxAdapter(child: MovieList(type: "top_rated")),
+                  SliverToBoxAdapter(child: sectionTitle("Top Rated")),
+                  const SliverToBoxAdapter(child: MovieList(type: "top_rated")),
 
-                SliverToBoxAdapter(child: sectionTitle("Upcoming")),
-                const SliverToBoxAdapter(child: MovieList(type: "upcoming")),
+                  SliverToBoxAdapter(child: sectionTitle("Upcoming")),
+                  const SliverToBoxAdapter(child: MovieList(type: "upcoming")),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

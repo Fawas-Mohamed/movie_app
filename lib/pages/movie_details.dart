@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:movieapp/core/constants.dart';
@@ -128,16 +129,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
       future: CastService.fetchCast(widget.movie.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox(
-            height: 130,
-            child: Center(child: AppLoader()),
-          );
+          return const SizedBox(height: 130, child: Center(child: AppLoader()));
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Text(
             "Cast not available",
-            style: TextStyle(color:Colors.white70),
+            style: TextStyle(color: Colors.white70),
           );
         }
 
@@ -210,7 +208,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   Widget build(BuildContext context) {
     final heroImage = widget.movie.backdropPath.isNotEmpty
         ? "${AppConstants.baseImageUrl}/${widget.movie.posterPath}"
-        : "${AppConstants.baseImageUrl}/${widget.movie.backdropPath}";
+        : (widget.movie.posterPath.isNotEmpty
+              ? "${AppConstants.baseImageUrl}/${widget.movie.backdropPath}"
+              : "");
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -241,7 +241,19 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.network(heroImage, fit: BoxFit.cover),
+                  CachedNetworkImage(
+                    imageUrl: heroImage,
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) => const AppLoader(),
+                    errorWidget: (_, __, ___) => Container(
+                      color: Colors.white12,
+                      child: const Icon(
+                        Icons.broken_image,
+                        color: AppColors.secondary,
+                        size: 40,
+                      ),
+                    ),
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -273,7 +285,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             child: isTrailerLoading
                                 ? const Padding(
                                     padding: EdgeInsets.all(18),
-                                    child:AppLoader()
+                                    child: AppLoader(),
                                   )
                                 : const Icon(
                                     Icons.play_arrow,
