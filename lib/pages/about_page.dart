@@ -2,6 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/info_row.dart';
+import 'package:movieapp/widgets/section_title.dart';
+import 'package:movieapp/widgets/social_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -135,52 +138,65 @@ class _AboutPageState extends State<AboutPage>
                           ),
                           child: Column(
                             children: [
-                              infoRow("Version", "1.0.1"),
+                              InfoRow(title:"Version", value:"1.0.1"),
                               const SizedBox(height: 10),
-                              infoRow("Developer", "Mohamed Fawas"),
+                              InfoRow(title:"Developer", value:"Mohamed Fawas"),
                               const SizedBox(height: 10),
-                              infoRow("Platform", "Flutter"),
+                              InfoRow(title:"Platform", value:"Flutter"),
                             ],
                           ),
                         ),
 
                         const SizedBox(height: 25),
 
-                        sectionTitle("Links"),
+                        SectionTitle(
+                          title:"Links"
+                          ),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            socialButton(
-                              Icons.code,
-                              "GitHub",
-                              () => openUrl("https://github.com/Fawas-Mohamed"),
+                            SocialButton(
+                              icon: Icons.code,
+                              text: "GitHub",
+                              onTap:() => openUrl("https://github.com/Fawas-Mohamed"),
                             ),
                             const SizedBox(width: 12),
-                            socialButton(
-                              Icons.language,
-                              "Website",
-                              () => openUrl("https://popcornpal.com"),
+                            SocialButton(
+                              icon:Icons.language,
+                              text:"Website",
+                              onTap:() => openUrl("https://popcornpal.com"),
                             ),
                           ],
                         ),
 
                         const SizedBox(height: 25),
 
-                        sectionTitle("Follow Us"),
+                        SectionTitle(
+                          title: "Follow Us"
+                          ),
 
                         Wrap(
                           spacing: 12,
                           runSpacing: 10,
                           alignment: WrapAlignment.center,
                           children: [
-                            socialButton(Icons.camera_alt, "Instagram", () {
+                            SocialButton(
+                              icon:Icons.camera_alt, 
+                              text:"Instagram", 
+                              onTap:() {
                               openUrl("https://instagram.com/popcornpal");
                             }),
-                            socialButton(Icons.facebook, "Facebook", () {
+                            SocialButton(
+                              icon:Icons.facebook, 
+                              text:"Facebook", 
+                              onTap:() {
                               openUrl("https://facebook.com/popcornpal");
                             }),
-                            socialButton(Icons.music_note, "TikTok", () {
+                            SocialButton(
+                              icon:Icons.music_note, 
+                              text:"TikTok", 
+                              onTap:() {
                               openUrl("https://tiktok.com/@popcornpal");
                             }),
                           ],
@@ -224,58 +240,6 @@ class _AboutPageState extends State<AboutPage>
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget sectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white70,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
-  Widget infoRow(String title, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title, style: TextStyle(color: Colors.white70)),
-        Text(
-          value,
-          style: const TextStyle(
-            color: AppColors.secondary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget socialButton(IconData icon, String text, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        decoration: BoxDecoration(
-          color: AppColors.secondary.withOpacity(0.08),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.white12),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: AppColors.secondary, size: 18),
-            const SizedBox(width: 6),
-            Text(text, style: const TextStyle(color: AppColors.secondary)),
-          ],
         ),
       ),
     );
