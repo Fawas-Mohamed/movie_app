@@ -145,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.all(6),
                       width: 95,
                       height: 95,
                       decoration: const BoxDecoration(
