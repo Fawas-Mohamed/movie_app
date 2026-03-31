@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_header.dart';
 import 'package:movieapp/widgets/info_row.dart';
 import 'package:movieapp/widgets/section_title.dart';
 import 'package:movieapp/widgets/social_button.dart';
@@ -61,42 +62,7 @@ class _AboutPageState extends State<AboutPage>
             opacity: _fadeAnimation,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color:AppColors.primary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: AppColors.background,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                      const Expanded(
-                        child: Center(
-                          child: Text(
-                            "About Us",
-                            style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 40),
-                    ],
-                  ),
-                ),
+                AppHeader(leftWidget: BackButton(), title: "About Us"),
 
                 const SizedBox(height: 10),
 
@@ -138,20 +104,21 @@ class _AboutPageState extends State<AboutPage>
                           ),
                           child: Column(
                             children: [
-                              InfoRow(title:"Version", value:"1.0.1"),
+                              InfoRow(title: "Version", value: "1.0.1"),
                               const SizedBox(height: 10),
-                              InfoRow(title:"Developer", value:"Mohamed Fawas"),
+                              InfoRow(
+                                title: "Developer",
+                                value: "Mohamed Fawas",
+                              ),
                               const SizedBox(height: 10),
-                              InfoRow(title:"Platform", value:"Flutter"),
+                              InfoRow(title: "Platform", value: "Flutter"),
                             ],
                           ),
                         ),
 
                         const SizedBox(height: 25),
 
-                        SectionTitle(
-                          title:"Links"
-                          ),
+                        SectionTitle(title: "Links"),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -159,22 +126,21 @@ class _AboutPageState extends State<AboutPage>
                             SocialButton(
                               icon: Icons.code,
                               text: "GitHub",
-                              onTap:() => openUrl("https://github.com/Fawas-Mohamed"),
+                              onTap: () =>
+                                  openUrl("https://github.com/Fawas-Mohamed"),
                             ),
                             const SizedBox(width: 12),
                             SocialButton(
-                              icon:Icons.language,
-                              text:"Website",
-                              onTap:() => openUrl("https://popcornpal.com"),
+                              icon: Icons.language,
+                              text: "Website",
+                              onTap: () => openUrl("https://popcornpal.com"),
                             ),
                           ],
                         ),
 
                         const SizedBox(height: 25),
 
-                        SectionTitle(
-                          title: "Follow Us"
-                          ),
+                        SectionTitle(title: "Follow Us"),
 
                         Wrap(
                           spacing: 12,
@@ -182,23 +148,26 @@ class _AboutPageState extends State<AboutPage>
                           alignment: WrapAlignment.center,
                           children: [
                             SocialButton(
-                              icon:Icons.camera_alt, 
-                              text:"Instagram", 
-                              onTap:() {
-                              openUrl("https://instagram.com/popcornpal");
-                            }),
+                              icon: Icons.camera_alt,
+                              text: "Instagram",
+                              onTap: () {
+                                openUrl("https://instagram.com/popcornpal");
+                              },
+                            ),
                             SocialButton(
-                              icon:Icons.facebook, 
-                              text:"Facebook", 
-                              onTap:() {
-                              openUrl("https://facebook.com/popcornpal");
-                            }),
+                              icon: Icons.facebook,
+                              text: "Facebook",
+                              onTap: () {
+                                openUrl("https://facebook.com/popcornpal");
+                              },
+                            ),
                             SocialButton(
-                              icon:Icons.music_note, 
-                              text:"TikTok", 
-                              onTap:() {
-                              openUrl("https://tiktok.com/@popcornpal");
-                            }),
+                              icon: Icons.music_note,
+                              text: "TikTok",
+                              onTap: () {
+                                openUrl("https://tiktok.com/@popcornpal");
+                              },
+                            ),
                           ],
                         ),
 

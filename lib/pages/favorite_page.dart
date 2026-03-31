@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_header.dart';
 import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
+import 'package:movieapp/widgets/user_avatar.dart';
 
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
@@ -21,34 +23,10 @@ class FavoritePage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 10,
+              AppHeader(
+                title: "Favorite Movies",
+                rightWidget: UserAvatar(email: user?.email),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(width: 50),
-                    const Text(
-                      "Favorite Movies",
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: AppColors.primary,
-                      child: Text(
-                        user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                        style: const TextStyle(color: AppColors.background),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Column(
                 children: [
                   const Text(

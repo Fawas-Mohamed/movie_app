@@ -12,9 +12,8 @@ class AppHeader extends StatelessWidget {
     required this.title,
     this.leftWidget,
     this.rightWidget,
-    this.centerTitler=true,
-
-    });
+    this.centerTitler = true,
+  });
 
   @override
   Widget build(BuildContext context) {

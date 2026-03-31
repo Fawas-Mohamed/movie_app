@@ -220,23 +220,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             backgroundColor: AppColors.background,
             expandedHeight: 320,
             pinned: true,
-            leading: Padding(
-              padding: const EdgeInsets.all(8),
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: AppColors.background,
-                    size: 18,
-                  ),
-                ),
-              ),
-            ),
+            leading: BackButton(),
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
                 fit: StackFit.expand,

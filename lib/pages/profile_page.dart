@@ -10,6 +10,7 @@ import 'package:movieapp/services/favorite_service.dart';
 import 'package:movieapp/services/watched_service.dart';
 import 'package:movieapp/services/watchlist_service.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_header.dart';
 import 'package:movieapp/widgets/profile_header.dart';
 import 'package:movieapp/widgets/profile_menu_tile.dart';
 import 'package:movieapp/widgets/profile_stat_card.dart';
@@ -32,25 +33,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                          child: Center(
-                            child: Text(
-                              "Profile",
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  AppHeader(title: "Profile"),
 
                   const SizedBox(height: 10),
 

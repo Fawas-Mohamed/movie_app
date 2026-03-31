@@ -1,8 +1,11 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_header.dart';
+import 'package:movieapp/widgets/user_avatar.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -58,10 +61,7 @@ class SettingsPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
-              "OK",
-              style: TextStyle(color: AppColors.primary),
-            ),
+            child: const Text("OK", style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -73,7 +73,10 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1A1A1A),
-        title: const Text("Logout", style: TextStyle(color: AppColors.secondary)),
+        title: const Text(
+          "Logout",
+          style: TextStyle(color: AppColors.secondary),
+        ),
         content: const Text(
           "Are you sure you want to logout?",
           style: TextStyle(color: Colors.white70),
@@ -114,10 +117,7 @@ class SettingsPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
-              "OK",
-              style: TextStyle(color: AppColors.primary),
-            ),
+            child: const Text("OK", style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -134,51 +134,10 @@ class SettingsPage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: AppColors.background,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                    const Expanded(
-                      child: Center(
-                        child: Text(
-                          "Settings",
-                          style: TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: AppColors.primary,
-                      child: Text(
-                        user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                        style: const TextStyle(
-                          color: AppColors.background,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              AppHeader(
+                leftWidget: BackButton(),
+                title: "Settings",
+                rightWidget: UserAvatar(email: user?.email),
               ),
 
               const SizedBox(height: 16),

@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movieapp/core/constants.dart';
 import 'package:movieapp/models/moviemodel.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_header.dart';
 import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
+import 'package:movieapp/widgets/user_avatar.dart';
 
 class WatchlistPage extends StatelessWidget {
   const WatchlistPage({super.key});
@@ -21,6 +23,11 @@ class WatchlistPage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
+              AppHeader(
+                leftWidget: Icon(Icons.bookmark, color: AppColors.primary),
+                title: "My Watchlist",
+                rightWidget: UserAvatar(email: user?.email),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                 child: Row(
@@ -28,10 +35,7 @@ class WatchlistPage extends StatelessWidget {
                   children: [
                     const SizedBox(
                       width: 40,
-                      child: Icon(
-                        Icons.bookmark,
-                        color: AppColors.primary,
-                      ),
+                      child: Icon(Icons.bookmark, color: AppColors.primary),
                     ),
                     const Text(
                       "My Watchlist",
@@ -67,9 +71,7 @@ class WatchlistPage extends StatelessWidget {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: AppLoader()
-                      );
+                      return const Center(child: AppLoader());
                     }
 
                     if (snapshot.hasError) {

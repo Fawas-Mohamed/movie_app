@@ -10,10 +10,12 @@ import 'package:movieapp/pages/profile_page.dart';
 import 'package:movieapp/pages/setting_page.dart';
 import 'package:movieapp/services/api_service.dart';
 import 'package:movieapp/widgets/app_background.dart';
+import 'package:movieapp/widgets/app_header.dart';
 import 'package:movieapp/widgets/app_loader.dart';
 import 'package:movieapp/widgets/movie-cart.dart';
 import 'package:movieapp/widgets/movie-list.dart';
 import 'package:movieapp/widgets/recently_viewed_section.dart';
+import 'package:movieapp/widgets/user_avatar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -93,12 +95,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget bannerSlider() {
     if (bannerMovies.isEmpty) {
-      return const SizedBox(
-        height: 160,
-        child: Center(
-          child:AppLoader(),
-        ),
-      );
+      return const SizedBox(height: 160, child: Center(child: AppLoader()));
     }
 
     return CarouselSlider(
@@ -135,7 +132,10 @@ class _HomePageState extends State<HomePage> {
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [AppColors.background.withOpacity(0.8), Colors.transparent],
+                  colors: [
+                    AppColors.background.withOpacity(0.8),
+                    Colors.transparent,
+                  ],
                 ),
               ),
             ),
@@ -164,9 +164,7 @@ class _HomePageState extends State<HomePage> {
     if (isLoading) {
       return const Padding(
         padding: EdgeInsets.all(20),
-        child: Center(
-          child: AppLoader()
-        ),
+        child: Center(child: AppLoader()),
       );
     }
 
@@ -174,7 +172,10 @@ class _HomePageState extends State<HomePage> {
       return const Padding(
         padding: EdgeInsets.all(20),
         child: Center(
-          child: Text("No Movies Found", style: TextStyle(color: AppColors.secondary)),
+          child: Text(
+            "No Movies Found",
+            style: TextStyle(color: AppColors.secondary),
+          ),
         ),
       );
     }
@@ -253,7 +254,10 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.home, color: AppColors.secondary),
-              title: const Text("Home", style: TextStyle(color: AppColors.secondary)),
+              title: const Text(
+                "Home",
+                style: TextStyle(color: AppColors.secondary),
+              ),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -303,49 +307,19 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const SizedBox(height: 15),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Builder(
-                        builder: (context) => IconButton(
-                          icon: const Icon(
-                            Icons.read_more,
-                            color: AppColors.primary,
-                          ),
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                        ),
-                      ),
-                      const Text(
-                        "PopcornPals",
-                        style: TextStyle(
-                          color: AppColors.primary,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundColor: AppColors.primary,
-                        child: Text(
-                          user?.email?.substring(0, 1).toUpperCase() ?? "U",
-                          style: const TextStyle(color: AppColors.background),
-                        ),
-                      ),
-                    ],
+                AppHeader(
+                  title: "PopcornPals",
+                  leftWidget: IconButton(
+                    icon: const Icon(Icons.read_more, color: AppColors.primary),
+                    onPressed: () => Scaffold.of(context).openDrawer(),
                   ),
+                  rightWidget: UserAvatar(email: user?.email),
                 ),
 
                 const Center(
                   child: Text(
                     "Discover Your Movies",
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(color: AppColors.primary, fontSize: 12),
                   ),
                 ),
 
@@ -357,7 +331,9 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       color: AppColors.secondary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(25),
-                      border: Border.all(color: AppColors.secondary.withOpacity(0.2)),
+                      border: Border.all(
+                        color: AppColors.secondary.withOpacity(0.2),
+                      ),
                     ),
                     child: TextField(
                       controller: _searchController,
