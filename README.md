@@ -55,6 +55,9 @@ It allows users to explore movies, watch trailers, manage favorites, and get per
 - **Material UI**
 
 ---
+## Screenshots
+<img width="720" height="1600" alt="Screenshot_20260331-223720" src="https://github.com/user-attachments/assets/43de87fb-51ac-4c64-8b44-d79600b60258" />
+
 
 ## 🔑 API Used
 
