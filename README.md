@@ -58,14 +58,14 @@ It allows users to explore movies, watch trailers, manage favorites, and get per
 
 ## Screenshots
 
-<img width="320" alt="Screenshot_20260331-121618" src="https://github.com/user-attachments/assets/ac68dfea-670b-40c2-acde-3cc3163a0c75" />
-<img width="320"  alt="Screenshot_20260331-224617" src="https://github.com/user-attachments/assets/fe2ee067-33de-4b73-adff-682c9add0d83" />
+<img width="320" alt="Screenshot_20260331-121618" src="https://github.com/user-attachments/assets/ac68dfea-670b-40c2-acde-3cc3163a0c75" />nbsp;&nbsp;&nbsp;
+<img width="320"  alt="Screenshot_20260331-224617" src="https://github.com/user-attachments/assets/fe2ee067-33de-4b73-adff-682c9add0d83" />nbsp;&nbsp;&nbsp;
 <img width="320"  alt="Screenshot_20260331-223619" src="https://github.com/user-attachments/assets/45bcc747-2f5a-4dc0-bde1-44f1851cdce2" /><br>
-<img width="320" alt="Screenshot_20260331-223712" src="https://github.com/user-attachments/assets/76a4d20e-0ee1-4f8d-8418-6c0feaf2a48e" />
-<img width="320"  alt="Screenshot_20260331-223701" src="https://github.com/user-attachments/assets/e3aba4be-f309-4d1a-a386-2d5de044b869" />
-<img width="320"  alt="Screenshot_20260331-223740" src="https://github.com/user-attachments/assets/641c5160-0af3-4b40-982d-8d0bf1ff020f" /><br>
+<img width="320" alt="Screenshot_20260331-223712" src="https://github.com/user-attachments/assets/76a4d20e-0ee1-4f8d-8418-6c0feaf2a48e" />nbsp;&nbsp;&nbsp;
+<img width="320"  alt="Screenshot_20260331-223701" src="https://github.com/user-attachments/assets/e3aba4be-f309-4d1a-a386-2d5de044b869" />nbsp;&nbsp;&nbsp;
+<img width="320" alt="Screenshot_20260331-223630" src="https://github.com/user-attachments/assets/06b3f277-a2b3-4ef4-93af-4c447264c43b" /><br>
+<img width="320"  alt="Screenshot_20260331-223740" src="https://github.com/user-attachments/assets/641c5160-0af3-4b40-982d-8d0bf1ff020f" />nbsp;&nbsp;&nbsp;
 <img width="320"  alt="Screenshot_20260331-224707" src="https://github.com/user-attachments/assets/88df5496-30bf-4d6e-adce-1331c3925242" />
-<img width="320"  alt="Screenshot_20260331-224707" src="https://github.com/user-attachments/assets/0efc59db-d986-4c72-8598-a0206f934f2d" />
 
 ---
 ## 🔑 API Used
