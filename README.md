@@ -77,11 +77,36 @@ flutter pub get
 flutter pub get
 ```
 ### 3. Add TMDB API Key
-###  lib/core/constants.dart
-###4. Setup Firebase
-###   Create a Firebase project
-###   Enable Authentication (Email/Password)
-###   Create Firestore database
+- lib/core/constants.dart
 
-###   Add your config file:
+### 4. Setup Firebase
+- Create a Firebase project
+- Enable Authentication (Email/Password)
+- Create Firestore database
+- Add your config file:
+```bash
+android/app/google-services.json
+```
+
+### 5. Run the App
+```bash
+flutter run
+```
+---
+### 🧠 What I Learned
+- API integration and JSON parsing
+- Firebase Authentication & Firestore
+- State management and UI structuring
+- Building scalable app architecture
+- Real-time updates and user-based data
+
+---
+### 🚀 Future Improvements
+- 🎥 Continue Watching feature
+- 📊 Advanced user analytics
+- 📱 Push notifications
+- 💾 Offline support
+
+---
+### ⭐ If you like this project, consider giving it a star!
 
