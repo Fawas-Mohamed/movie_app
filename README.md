@@ -161,7 +161,6 @@ It allows users to explore movies, watch trailers, manage favorites, and get per
 - Netflix-style modern UI
 - Blur background effects
 - Animated splash screen
-- Native splash screen
 - Smooth transitions
 
 ---
@@ -175,7 +174,41 @@ It allows users to explore movies, watch trailers, manage favorites, and get per
 - **TMDB API**
 - **REST API integration**
 - **Material UI**
+---
+
+## 📸 Screenshots
+
+> Add screenshots here 👇
+
+- Home Page  
+- Movie Details  
+- Favorites  
+- Watchlist  
+- Profile  
+- Settings  
 
 ---
 
-## 📂 Project Structure
+## 🔑 API Used
+
+- TMDB API  
+👉 https://www.themoviedb.org/documentation/api
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Fawas-Mohamed/movie_app.git
+cd movie_app-main
+flutter pub get
+```
+### 2. Install dependencies
+```bash
+flutter pub get
+```
+### 3. flutter pub get
+### lib/core/constants.dart
+
